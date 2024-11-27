@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaTelegram } from 'react-icons/fa'
+import { FaGithub, FaTelegram } from 'react-icons/fa'
 import { SiSpring, SiCloudfoundry, SiNextdotjs, SiVite, SiSolana } from 'react-icons/si'
 import { PiPianoKeysFill, PiPaintBrushBold } from 'react-icons/pi'
 
