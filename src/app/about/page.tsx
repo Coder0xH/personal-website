@@ -2,152 +2,210 @@
 
 import { motion } from 'framer-motion'
 import { FaGithub, FaEthereum, FaTelegram } from 'react-icons/fa'
-import { SiSolidity } from 'react-icons/si'
+import { SiSolidity, SiWeb3Dotjs, SiBlockchaindotcom } from 'react-icons/si'
+import { TbBrandNextjs } from 'react-icons/tb'
 import Navbar from '@/components/Navbar'
 
 export default function About() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
   }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  }
+
+  const glowVariants = {
+    initial: { opacity: 0.5 },
+    animate: {
+      opacity: [0.5, 1, 0.5],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  }
+
+  const techStackItems = [
+    { icon: <FaEthereum className="w-8 h-8" />, label: "Ethereum" },
+    { icon: <SiSolidity className="w-8 h-8" />, label: "Solidity" },
+    { icon: <SiWeb3Dotjs className="w-8 h-8" />, label: "Web3.js" },
+    { icon: <TbBrandNextjs className="w-8 h-8" />, label: "Next.js" },
+    { icon: <SiBlockchaindotcom className="w-8 h-8" />, label: "Blockchain" }
+  ]
 
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-900 text-gray-100 pt-40 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <motion.div {...fadeInUp} className="space-y-12">
-            {/* Header Section */}
-            <div className="text-center space-y-4">
-              <h1 className="text-4xl font-bold">Dexter Ellis</h1>
-              <p className="text-xl text-blue-400">Blockchain Developer</p>
-              <div className="flex justify-center space-x-6">
-                <a href="https://github.com/Coder0xH" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">
-                  <FaGithub className="h-8 w-8" />
-                </a>
-                <a href="https://t.me/memejump_bot/memejump?startapp=GZEMUAGT" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">
-                  <FaTelegram className="h-8 w-8" />
-                </a>
-              </div>
+      <div className="min-h-screen text-gray-100 pt-40 px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="max-w-4xl mx-auto relative"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Header Section */}
+          <div className="text-center space-y-8 mb-16">
+            <motion.h1 
+              className="text-6xl sm:text-7xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text inline-block w-full"
+              variants={itemVariants}
+            >
+              Dexter Ellis
+            </motion.h1>
+            <motion.p 
+              className="text-2xl sm:text-3xl bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text inline-block w-full"
+              variants={itemVariants}
+            >
+              Blockchain Developer
+            </motion.p>
+            <motion.div 
+              className="flex justify-center space-x-6"
+              variants={itemVariants}
+            >
+              {[
+                { href: "https://github.com/Coder0xH", icon: <FaGithub className="h-8 w-8" /> },
+                { href: "https://t.me/memejump_bot/memejump?startapp=GZEMUAGT", icon: <FaTelegram className="h-8 w-8" /> }
+              ].map((item, index) => (
+                <motion.a
+                  key={index}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transform hover:scale-110 transition-all"
+                  whileHover={{ y: -2 }}
+                >
+                  {item.icon}
+                </motion.a>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Tech Stack Section */}
+          <motion.div 
+            className="mb-16"
+            variants={itemVariants}
+          >
+            <h2 className="text-2xl font-bold mb-8 text-center">Tech Stack</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
+              {techStackItems.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="flex flex-col items-center space-y-2"
+                  whileHover={{ scale: 1.1 }}
+                  variants={glowVariants}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <div className="p-4 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                    {item.icon}
+                  </div>
+                  <span className="text-sm">{item.label}</span>
+                </motion.div>
+              ))}
             </div>
-
-            {/* Contact Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center md:text-left">
-              <div>
-                <p>📧 Email: coder0xh@gmail.com</p>
-              </div>
-              <div>
-                <p>🌍 Location: Shenzhen, China</p>
-                <p>🎂 Age: 28</p>
-              </div>
-            </div>
-
-            {/* Featured Projects */}
-            <section>
-              <h2 className="text-2xl font-bold mb-6">Featured Projects</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <motion.div 
-                  className="bg-gray-800 p-6 rounded-lg"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h3 className="text-xl font-semibold mb-2">Infa Labs Website</h3>
-                  <p className="text-gray-300 mb-4">Corporate website built with Three.js + React</p>
-                  <a href="https://infalabs.io/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
-                    Visit Website →
-                  </a>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-800 p-6 rounded-lg"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h3 className="text-xl font-semibold mb-2">MemeJump GameFi</h3>
-                  <p className="text-gray-300 mb-4">Telegram mini-app game platform with Play-to-Earn mechanics</p>
-                  <a href="https://t.me/memejump_bot/memejump?startapp=GZEMUAGT" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
-                    Play Game →
-                  </a>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-800 p-6 rounded-lg"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h3 className="text-xl font-semibold mb-2">MemeShorts Platform</h3>
-                  <p className="text-gray-300 mb-4">Telegram mini-app for short videos built with Next.js</p>
-                  <a href="https://t.me/MemeShorts_bot/memeshort" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
-                    View Platform →
-                  </a>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-800 p-6 rounded-lg"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h3 className="text-xl font-semibold mb-2">Saluki Token</h3>
-                  <p className="text-gray-300 mb-4">Token minting platform with custom Solidity smart contracts</p>
-                  <a href="https://saluki.me/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
-                    Visit Platform →
-                  </a>
-                </motion.div>
-              </div>
-            </section>
-
-            {/* Technical Skills */}
-            <section>
-              <h2 className="text-2xl font-bold mb-6">Technical Skills</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Blockchain</h3>
-                  <ul className="list-disc list-inside space-y-2 text-gray-300">
-                    <li>Deep understanding of BTC, ETH, SOL, TON</li>
-                    <li>Smart Contract Development (Solidity, FunC)</li>
-                    <li>Web3.js, Ethers.js integration</li>
-                    <li>DeFi & GameFi development</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Development</h3>
-                  <ul className="list-disc list-inside space-y-2 text-gray-300">
-                    <li>Java, Spring Boot, Python</li>
-                    <li>React, Next.js, Three.js</li>
-                    <li>PostgreSQL, MySQL, Redis</li>
-                    <li>Docker, Jenkins, AWS</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Professional Experience */}
-            <section>
-              <h2 className="text-2xl font-bold mb-6">Professional Experience</h2>
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-xl font-semibold">Full Stack Developer & Project Manager</h3>
-                  <p className="text-blue-400">Shenzhen Yizhan Yuan Technology Co., Ltd | 2024.6 - Present</p>
-                  <ul className="list-disc list-inside mt-4 space-y-2 text-gray-300">
-                    <li>Led development of TON GameFi platform with 300k+ users</li>
-                    <li>Developed Telegram mini-apps for gaming and short video content</li>
-                    <li>Managed team of 7 developers and coordinated project timelines</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold">Backend Developer</h3>
-                  <p className="text-blue-400">Nanjing Huasu Technology Co., Ltd | 2023.12 - 2024.06</p>
-                  <ul className="list-disc list-inside mt-4 space-y-2 text-gray-300">
-                    <li>Developed core modules for green energy consumption calculation system</li>
-                    <li>Designed and optimized database structures for high-performance data processing</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
           </motion.div>
-        </div>
+
+          {/* Featured Projects */}
+          <motion.section 
+            variants={itemVariants}
+            className="mb-16"
+          >
+            <h2 className="text-2xl font-bold mb-8 text-center">Featured Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: "Infa Labs Website",
+                  description: "Corporate website built with Three.js + React",
+                  link: "https://infalabs.io/",
+                  linkText: "Visit Website"
+                },
+                {
+                  title: "MemeJump GameFi",
+                  description: "Telegram mini-app game platform with Play-to-Earn mechanics",
+                  link: "https://t.me/memejump_bot/memejump?startapp=GZEMUAGT",
+                  linkText: "Play Game"
+                }
+              ].map((project, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 backdrop-blur-sm"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={false}
+                  />
+                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <p className="text-gray-300 mb-4">{project.description}</p>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300"
+                  >
+                    <span>{project.linkText}</span>
+                    <span>→</span>
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Experience Timeline */}
+          <motion.section variants={itemVariants}>
+            <h2 className="text-2xl font-bold mb-8 text-center">Experience</h2>
+            <div className="space-y-8">
+              {[
+                {
+                  title: "Full Stack Developer & Project Manager",
+                  company: "Shenzhen Yizhan Yuan Technology Co., Ltd",
+                  period: "2024.6 - Present",
+                  achievements: [
+                    "Led development of TON GameFi platform with 300k+ users",
+                    "Developed Telegram mini-apps for gaming and short video content",
+                    "Managed team of 7 developers and coordinated project timelines"
+                  ]
+                },
+                {
+                  title: "Backend Developer",
+                  company: "Nanjing Huasu Technology Co., Ltd",
+                  period: "2023.12 - 2024.06",
+                  achievements: [
+                    "Developed core modules for green energy consumption calculation system",
+                    "Designed and optimized database structures for high-performance data processing"
+                  ]
+                }
+              ].map((experience, index) => (
+                <motion.div
+                  key={index}
+                  className="relative pl-8 before:content-[''] before:absolute before:left-0 before:top-0 before:w-1 before:h-full before:bg-gradient-to-b before:from-blue-400 before:to-purple-500"
+                >
+                  <h3 className="text-xl font-semibold">{experience.title}</h3>
+                  <p className="text-blue-400 mb-4">{experience.company} | {experience.period}</p>
+                  <ul className="list-disc list-inside space-y-2 text-gray-300">
+                    {experience.achievements.map((achievement, i) => (
+                      <li key={i}>{achievement}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        </motion.div>
       </div>
     </>
   )

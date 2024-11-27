@@ -22,7 +22,7 @@ const skills = [
     items: [
       { name: 'Java/Spring Boot', icon: FaJava, level: 99 },
       { name: 'Python', icon: FaPython, level: 70 },
-      { name: 'Rust', icon: SiGraphql, level: 45 },
+      { name: 'Rust', icon: SiRust, level: 45 },
       { name: 'Go', icon: SiGo, level: 65 },
     ]
   },
@@ -56,26 +56,6 @@ const skills = [
   }
 ]
 
-const HexagonBackground = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden opacity-10">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            transform: `rotate(${Math.random() * 360}deg)`,
-          }}
-        >
-          <div className="w-20 h-20 border-2 border-blue-400 rotate-45 opacity-20" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 const SkillBar = ({ name, level, icon: Icon }) => {
   const barRef = useRef(null)
 
@@ -107,53 +87,44 @@ const SkillBar = ({ name, level, icon: Icon }) => {
 
 export default function SkillsPage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative">
+    <>
       <Navbar />
-      <HexagonBackground />
-      
-      <main className="container mx-auto px-4 pt-32 pb-16 relative z-10">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16"
-        >
-          <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-            Technical Expertise
-          </span>
-        </motion.h1>
+      <div className="min-h-screen text-gray-100 py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text"
+          >
+            Skills & Expertise
+          </motion.h1>
 
-        <div className="max-w-4xl mx-auto">
           {skills.map((category, index) => (
             <motion.div
               key={category.category}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              className="mb-12"
+              className="mb-16"
             >
-              <h2 className="text-2xl font-semibold mb-6 text-blue-400">
+              <h2 className="text-2xl font-semibold mb-8 text-blue-400">
                 {category.category}
               </h2>
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {category.items.map((skill) => (
-                  <SkillBar key={skill.name} {...skill} />
+                  <SkillBar
+                    key={skill.name}
+                    name={skill.name}
+                    level={skill.level}
+                    icon={skill.icon}
+                  />
                 ))}
               </div>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Constantly exploring new technologies and staying at the forefront of Web3 development, while maintaining expertise across the full stack.
-          </p>
-        </motion.div>
-      </main>
-    </div>
+      </div>
+    </>
   )
 }

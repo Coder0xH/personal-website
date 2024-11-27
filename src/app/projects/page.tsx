@@ -136,11 +136,11 @@ const ProjectSection = ({ title, projects }) => (
   </section>
 )
 
-export default function Projects() {
+export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-900 text-gray-100 py-32 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen text-gray-100 py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
