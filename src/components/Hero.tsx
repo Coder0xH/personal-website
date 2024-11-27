@@ -49,9 +49,9 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
   
   ls: (path = '.') => {
     if (path === '.') {
-      return <div className="space-x-2">
+      return <div className="flex flex-wrap gap-2">
         {Object.keys(fileSystem).map((file, i) => (
-          <span key={i} className="inline-block">
+          <span key={i}>
             {file.endsWith('/') ? 
               <span className="text-blue-400">{file}</span> : 
               <span className="text-yellow-400">{file}</span>
@@ -61,9 +61,9 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
       </div>
     }
     if (path === 'projects') {
-      return <div className="space-x-2">
+      return <div className="flex flex-wrap gap-2">
         {Object.keys(fileSystem['projects/']).map((file, i) => (
-          <span key={i} className="text-yellow-400 inline-block">{file}</span>
+          <span key={i} className="text-yellow-400">{file}</span>
         ))}
       </div>
     }
