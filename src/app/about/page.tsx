@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { FaGithub, FaTelegram } from 'react-icons/fa'
-import { SiSpringboot, SiCloudfoundry, SiNextdotjs, SiVite, SiSolana } from 'react-icons/si'
+import { SiSpring, SiCloudfoundry, SiNextdotjs, SiVite, SiSolana } from 'react-icons/si'
 import { PiPianoKeysFill, PiPaintBrushBold } from 'react-icons/pi'
 import Navbar from '@/components/Navbar'
 
@@ -12,29 +12,29 @@ export default function About() {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
-        transition: { 
-          staggerChildren: 0.15, 
-          duration: 0.3 
+        transition: {
+          staggerChildren: 0.15,
+          duration: 0.3
         }
       }
     },
     item: {
-      hidden: { opacity: 0, y: 10 }, 
+      hidden: { opacity: 0, y: 10 },
       visible: {
         opacity: 1,
         y: 0,
-        transition: { 
-          duration: 0.3, 
+        transition: {
+          duration: 0.3,
           ease: "easeOut"
         }
       }
     },
     glow: {
-      initial: { opacity: 0.7 }, 
+      initial: { opacity: 0.7 },
       animate: {
         opacity: [0.7, 1, 0.7],
         transition: {
-          duration: 3, 
+          duration: 3,
           repeat: Infinity,
           ease: "linear"
         }
@@ -44,33 +44,33 @@ export default function About() {
 
   const skills = {
     technical: [
-      { 
-        icon: <SiSpringboot className="w-6 h-6" />, 
-        name: "Spring Boot", 
+      {
+        icon: <SiSpring className="w-6 h-6" />,
+        name: "Spring Boot",
         category: "Backend Framework",
         color: "text-green-400"
       },
-      { 
-        icon: <SiCloudfoundry className="w-6 h-6" />, 
-        name: "Foundry", 
+      {
+        icon: <SiCloudfoundry className="w-6 h-6" />,
+        name: "Foundry",
         category: "Smart Contract Development",
         color: "text-yellow-400"
       },
-      { 
-        icon: <SiNextdotjs className="w-6 h-6" />, 
-        name: "Next.js", 
+      {
+        icon: <SiNextdotjs className="w-6 h-6" />,
+        name: "Next.js",
         category: "Frontend Framework",
         color: "text-white"
       },
-      { 
-        icon: <SiVite className="w-6 h-6" />, 
-        name: "Vite", 
+      {
+        icon: <SiVite className="w-6 h-6" />,
+        name: "Vite",
         category: "Build Tool",
         color: "text-purple-400"
       },
-      { 
-        icon: <SiSolana className="w-6 h-6" />, 
-        name: "Anchor", 
+      {
+        icon: <SiSolana className="w-6 h-6" />,
+        name: "Anchor",
         category: "Solana Development",
         color: "text-blue-400"
       }
@@ -114,7 +114,7 @@ export default function About() {
     <>
       <Navbar />
       <div className="min-h-screen text-gray-100">
-        <motion.div 
+        <motion.div
           className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16"
           variants={animations.container}
           initial="hidden"
@@ -169,7 +169,7 @@ export default function About() {
               {skills.technical.map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="group relative p-6 rounded-xl border border-gray-700/50 backdrop-blur-sm"
+                  className="group relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800"
                   whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                   variants={animations.glow}
                 >
@@ -196,7 +196,7 @@ export default function About() {
               {skills.artistic.map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="relative p-6 rounded-xl border border-gray-700/50 backdrop-blur-sm"
+                  className="relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-gray-900 via-slate-900 to-purple-900/40"
                   whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
                 >
                   <div className="flex items-start space-x-4">
@@ -229,10 +229,10 @@ export default function About() {
               {projects.map((project, index) => (
                 <motion.div
                   key={index}
-                  className="group relative p-6 rounded-xl border border-gray-700/50 backdrop-blur-sm overflow-hidden"
+                  className="group relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-slate-900 via-gray-900 to-purple-900/40 overflow-hidden"
                   whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <h3 className="text-xl font-semibold text-gray-200 mb-1">
                     {project.title}
                   </h3>

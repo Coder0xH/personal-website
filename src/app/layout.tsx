@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} min-h-screen bg-gray-900`}>
-        <ClientLayout>
+      <ClientLayout>
           <div className="relative z-10">
             {children}
           </div>

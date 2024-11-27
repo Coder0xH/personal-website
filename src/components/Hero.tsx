@@ -46,14 +46,14 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
       - <span className="text-yellow-400">echo</span> &lt;text&gt;: Display text
     </div>
   </div>,
-  
+
   ls: (path = '.') => {
     if (path === '.') {
       return <div className="flex flex-wrap gap-2">
         {Object.keys(fileSystem).map((file, i) => (
           <span key={i}>
-            {file.endsWith('/') ? 
-              <span className="text-blue-400">{file}</span> : 
+            {file.endsWith('/') ?
+              <span className="text-blue-400">{file}</span> :
               <span className="text-yellow-400">{file}</span>
             }
           </span>
@@ -69,7 +69,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
     }
     return <span className="text-red-400">ls: cannot access {path}: No such file or directory</span>
   },
-  
+
   cat: (file: string) => {
     if (file === 'about.md') {
       return <div className="space-y-2">
@@ -81,7 +81,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
         </div>
       </div>
     }
-    
+
     if (file === 'skills.txt') {
       return <div className="space-y-1">
         {[
@@ -96,7 +96,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
         ))}
       </div>
     }
-    
+
     if (file === 'README.md') {
       return <div className="space-y-2">
         <div className="text-green-400 text-lg font-bold"># Welcome to Dexter's Terminal</div>
@@ -111,7 +111,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
         </div>
       </div>
     }
-    
+
     if (file === 'contact.json') {
       return <div className="text-blue-400 whitespace-pre-wrap">
         {`{
@@ -121,7 +121,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
 }`}
       </div>
     }
-    
+
     if (file.startsWith('projects/')) {
       const projectFile = file.slice(9)
       if (projectFile in fileSystem['projects/']) {
@@ -129,18 +129,18 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
         return <div className="text-green-400">{content}</div>
       }
     }
-    
+
     return <span className="text-red-400">cat: {file}: No such file or directory</span>
   },
-  
+
   pwd: () => <span className="text-blue-400">/home/dexter{currentDirectory}</span>,
-  
+
   whoami: () => <span className="text-green-400">dexter - Web3 Technical Director</span>,
-  
+
   date: () => <span className="text-yellow-400">{new Date().toString()}</span>,
-  
+
   echo: (...args: string[]) => <span className="text-green-400">{args.join(' ')}</span>,
-  
+
   cd: (dir: string) => {
     if (dir === 'projects' || dir === 'projects/') {
       return ''
@@ -158,7 +158,7 @@ export default function Hero() {
   const [commandHistory, setCommandHistory] = useState<CommandHistory[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [currentDirectory, setCurrentDirectory] = useState('')
-  
+
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalContentRef = useRef<HTMLDivElement>(null)
@@ -185,7 +185,7 @@ export default function Hero() {
     const commandArgs = args.slice(1)
 
     let output: string | JSX.Element = 'Command not found: ' + command
-    
+
     if (command === 'clear') {
       setCommandHistory([])
       return
@@ -244,20 +244,19 @@ export default function Hero() {
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
-      <motion.div 
+      <motion.div
         className="max-w-4xl mx-auto w-full"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <motion.div
-          className={`bg-gray-900/50 backdrop-blur-sm rounded-lg border ${
-            isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
-          } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
+          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
+            } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
           ref={terminalRef}
         >
           {/* Terminal Header */}
-          <div className="bg-gray-800/50 px-4 py-2 flex items-center">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 flex items-center">
             <div className="flex space-x-2">
               <div className="w-3 h-3 rounded-full bg-red-500" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -267,7 +266,7 @@ export default function Hero() {
               ~/dexter{currentDirectory}
             </div>
           </div>
-          
+
           {/* Terminal Content */}
           <div ref={terminalContentRef} className="p-6 space-y-2 max-h-[60vh] overflow-y-auto">
             <AnimatePresence>
@@ -307,7 +306,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Tech Stack */}
-        <motion.div 
+        <motion.div
           className="flex flex-wrap items-center justify-center gap-6 mt-8 text-2xl text-gray-400"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -334,7 +333,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Social Links */}
-        <motion.div 
+        <motion.div
           className="flex items-center justify-center space-x-4 mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

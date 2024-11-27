@@ -129,11 +129,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
-      className="relative overflow-hidden rounded-xl border border-gray-700/50 backdrop-blur-sm
+      className="relative overflow-hidden rounded-xl border border-gray-700/50 
+                 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900
                  group transition-all duration-300"
     >
       {/* Terminal-like header */}
-      <div className="bg-gray-900/80 px-4 py-2 flex items-center justify-between border-b border-gray-700/50">
+      <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 flex items-center justify-between border-b border-gray-700/50">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>

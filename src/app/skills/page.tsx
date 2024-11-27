@@ -266,7 +266,7 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
-              className="absolute left-0 right-0 mt-2 bg-gray-800/95 backdrop-blur-sm rounded-lg border border-gray-700/50 shadow-xl"
+              className="absolute left-0 right-0 mt-2 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg border border-gray-700/50 shadow-xl"
               style={{ zIndex: 1000 }}
             >
               <div className="p-3 text-sm font-mono">
@@ -296,7 +296,7 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
                   </div>
                 </div>
                 <div 
-                  className="text-xs bg-gray-900/50 rounded p-2 border border-gray-700/50 cursor-pointer hover:border-gray-600 transition-colors"
+                  className="text-xs bg-gradient-to-r from-gray-900 to-gray-800 rounded p-2 border border-gray-700/50 cursor-pointer hover:border-gray-600 transition-colors"
                   onClick={() => copyToClipboard(quickStart)}
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -344,7 +344,7 @@ export default function SkillsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              className="relative mb-16 p-6 bg-gray-800/30 rounded-lg border border-gray-700/50 backdrop-blur-sm"
+              className="relative mb-16 p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-lg border border-gray-700/50"
             >
               <div className="mb-6">
                 <h2 className="text-2xl font-mono font-semibold mb-2 text-blue-400">
