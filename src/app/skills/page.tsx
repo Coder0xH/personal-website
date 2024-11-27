@@ -1,22 +1,59 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
-import { FaEthereum } from 'react-icons/fa'
-import { SiSolidity, SiRust, SiWeb3Dotjs } from 'react-icons/si'
+import { FaJava, FaPython, FaReact, FaDocker, FaAws, FaGitAlt, FaLinux, FaEthereum } from 'react-icons/fa'
+import { SiSolidity, SiRust, SiSpring, SiPostgresql, SiRedis, SiMysql, SiMongodb, SiKubernetes, SiTerraform, SiGraphql, SiTypescript, SiJavascript, SiGo, SiWeb3Dotjs } from 'react-icons/si'
+import { TbBrandNextjs } from 'react-icons/tb'
 import Navbar from '@/components/Navbar'
 
 const skills = [
   {
     category: 'Blockchain Development',
     items: [
-      { name: 'Smart Contracts', icon: SiSolidity, level: 95 },
+      { name: 'Smart Contracts (Solidity)', icon: SiSolidity, level: 95 },
       { name: 'Web3.js/Ethers.js', icon: SiWeb3Dotjs, level: 90 },
       { name: 'Rust/Solana', icon: SiRust, level: 85 },
       { name: 'DeFi Protocols', icon: FaEthereum, level: 88 },
     ]
   },
-  // 可以添加更多类别
+  {
+    category: 'Backend Development',
+    items: [
+      { name: 'Java/Spring Boot', icon: FaJava, level: 99 },
+      { name: 'Python', icon: FaPython, level: 70 },
+      { name: 'Rust', icon: SiGraphql, level: 45 },
+      { name: 'Go', icon: SiGo, level: 65 },
+    ]
+  },
+  {
+    category: 'Frontend Development',
+    items: [
+      { name: 'React', icon: FaReact, level: 95 },
+      { name: 'Next.js', icon: TbBrandNextjs, level: 90 },
+      { name: 'TypeScript', icon: SiTypescript, level: 88 },
+      { name: 'JavaScript', icon: SiJavascript, level: 92 },
+    ]
+  },
+  {
+    category: 'Database & Cache',
+    items: [
+      { name: 'PostgreSQL', icon: SiPostgresql, level: 92 },
+      { name: 'Redis', icon: SiRedis, level: 88 },
+      { name: 'MySQL', icon: SiMysql, level: 94 },
+      { name: 'MongoDB', icon: SiMongodb, level: 82 },
+    ]
+  },
+  {
+    category: 'DevOps & Cloud',
+    items: [
+      { name: 'Docker', icon: FaDocker, level: 93 },
+      { name: 'Kubernetes', icon: SiKubernetes, level: 85 },
+      { name: 'AWS', icon: FaAws, level: 88 },
+      { name: 'Terraform', icon: SiTerraform, level: 82 },
+      { name: 'Linux', icon: FaLinux, level: 85 },
+    ]
+  }
 ]
 
 const HexagonBackground = () => {
@@ -85,7 +122,7 @@ export default function SkillsPage() {
           </span>
         </motion.h1>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {skills.map((category, index) => (
             <motion.div
               key={category.category}
@@ -113,7 +150,7 @@ export default function SkillsPage() {
           className="mt-16 text-center"
         >
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Constantly exploring new blockchain technologies and staying at the forefront of Web3 development.
+            Constantly exploring new technologies and staying at the forefront of Web3 development, while maintaining expertise across the full stack.
           </p>
         </motion.div>
       </main>
