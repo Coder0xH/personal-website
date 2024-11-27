@@ -161,6 +161,7 @@ export default function Hero() {
   
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const terminalContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // 自动聚焦到输入框
@@ -168,6 +169,12 @@ export default function Hero() {
     // 显示初始的README内容
     handleCommand('cat README.md')
   }, [])
+
+  useEffect(() => {
+    if (terminalContentRef.current) {
+      terminalContentRef.current.scrollTop = terminalContentRef.current.scrollHeight;
+    }
+  }, [commandHistory]);
 
   const handleCommand = (cmd: string) => {
     const trimmedCmd = cmd.trim()
@@ -246,26 +253,15 @@ export default function Hero() {
         <motion.div
           className={`bg-gray-900/50 backdrop-blur-sm rounded-lg border ${
             isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
-          } overflow-hidden shadow-2xl transition-colors duration-300`}
-          whileHover={{ scale: 1.01 }}
-          onClick={handleTerminalClick}
+          } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
           ref={terminalRef}
         >
           {/* Terminal Header */}
           <div className="bg-gray-800/50 px-4 py-2 flex items-center">
             <div className="flex space-x-2">
-              <motion.div 
-                className="w-3 h-3 rounded-full bg-red-500 cursor-pointer"
-                whileHover={{ scale: 1.2 }}
-              />
-              <motion.div 
-                className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer"
-                whileHover={{ scale: 1.2 }}
-              />
-              <motion.div 
-                className="w-3 h-3 rounded-full bg-green-500 cursor-pointer"
-                whileHover={{ scale: 1.2 }}
-              />
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <div className="w-3 h-3 rounded-full bg-green-500" />
             </div>
             <div className="flex-1 text-center text-sm text-gray-400">
               ~/dexter{currentDirectory}
@@ -273,7 +269,7 @@ export default function Hero() {
           </div>
           
           {/* Terminal Content */}
-          <div className="p-6 space-y-2 max-h-[60vh] overflow-y-auto">
+          <div ref={terminalContentRef} className="p-6 space-y-2 max-h-[60vh] overflow-y-auto">
             <AnimatePresence>
               {commandHistory.map((item, index) => (
                 <motion.div
@@ -317,22 +313,22 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <motion.div whileHover={{ scale: 1.1, color: '#627EEA' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <FaEthereum title="Ethereum" />
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1, color: '#C0C0C0' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <SiSolidity title="Solidity" />
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1, color: '#F0B90B' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <SiWeb3Dotjs title="Web3.js" />
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1, color: '#0070F3' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <TbBrandNextjs title="Next.js" />
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1, color: '#3178C6' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <SiTypescript title="TypeScript" />
           </motion.div>
-          <motion.div whileHover={{ scale: 1.1, color: '#DEA584' }} className="cursor-pointer">
+          <motion.div className="cursor-pointer">
             <SiRust title="Rust" />
           </motion.div>
         </motion.div>
