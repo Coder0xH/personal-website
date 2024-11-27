@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaJava, FaPython, FaReact, FaDocker, FaAws, FaLinux, FaEthereum, FaExternalLinkAlt, FaTerminal } from 'react-icons/fa'
 import { SiSolidity, SiRust, SiPostgresql, SiRedis, SiMysql, SiMongodb, SiKubernetes, SiTerraform, SiTypescript, SiJavascript, SiGo, SiWeb3Dotjs } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
-import Navbar from '@/components/Navbar'
 
 const skills = [
   {
@@ -318,57 +317,54 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
 
 export default function SkillsPage() {
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen text-gray-100 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto relative">
+    <div className="min-h-screen text-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-5xl font-bold font-mono mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+            Skills.render()
+          </h1>
+          <div className="text-gray-400 font-mono text-lg">
+            <span className="text-blue-400">const</span> <span className="text-purple-400">developer</span> = {'{'}
+            <span className="text-green-400">type</span>: <span className="text-orange-400">"Full-Stack + Web3"</span>
+            {'}'}
+          </div>
+        </motion.div>
+
+        {skills.map((category, index) => (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            key={category.category}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-20 mt-16"
+            transition={{ delay: index * 0.2 }}
+            className="relative mb-16 p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-lg border border-gray-700/50"
           >
-            <h1 className="text-5xl font-bold font-mono mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-              Skills.render()
-            </h1>
-            <div className="text-gray-400 font-mono text-lg">
-              <span className="text-blue-400">const</span> <span className="text-purple-400">developer</span> = {'{'}
-              <span className="text-green-400">type</span>: <span className="text-orange-400">"Full-Stack + Web3"</span>
-              {'}'}
+            <div className="mb-6">
+              <h2 className="text-2xl font-mono font-semibold mb-2 text-blue-400">
+                {category.category}
+              </h2>
+              <p className="text-gray-400 font-mono text-sm">{category.description}</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {category.items.map((skill) => (
+                <SkillBar
+                  key={skill.name}
+                  name={skill.name}
+                  level={skill.level}
+                  icon={skill.icon}
+                  color={skill.color}
+                  docs={skill.docs}
+                  quickStart={skill.quickStart}
+                />
+              ))}
             </div>
           </motion.div>
-
-          {skills.map((category, index) => (
-            <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-              className="relative mb-16 p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-lg border border-gray-700/50"
-            >
-              <div className="mb-6">
-                <h2 className="text-2xl font-mono font-semibold mb-2 text-blue-400">
-                  {category.category}
-                </h2>
-                <p className="text-gray-400 font-mono text-sm">{category.description}</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {category.items.map((skill) => (
-                  <SkillBar
-                    key={skill.name}
-                    name={skill.name}
-                    level={skill.level}
-                    icon={skill.icon}
-                    color={skill.color}
-                    docs={skill.docs}
-                    quickStart={skill.quickStart}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        ))}
       </div>
-    </>
+    </div>
   )
 }

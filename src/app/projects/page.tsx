@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaEthereum, FaTelegram, FaCode, FaServer, FaDatabase } from 'react-icons/fa'
 import { SiSolidity, SiRust, SiWeb3Dotjs, SiBitcoin } from 'react-icons/si'
-import Navbar from '@/components/Navbar'
 
 interface ProjectStats {
   [key: string]: string | number;
@@ -236,58 +235,55 @@ const ProjectSection = ({ title, projects, icon }: { title: string, projects: Pr
 
 export default function ProjectsPage() {
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen text-gray-100 py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-4xl font-bold font-mono mb-4">
-              <span className="text-gray-400">function</span>{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-                showcase_projects
-              </span>
-              <span className="text-gray-400">()</span>{' '}
-              <span className="text-blue-400">{'{'}</span>
-            </h1>
-            <p className="text-gray-400 font-mono">
-              // Exploring the intersection of blockchain and development
-            </p>
-          </motion.div>
+    <div className="min-h-screen text-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl font-bold font-mono mb-4">
+            <span className="text-gray-400">function</span>{' '}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+              showcase_projects
+            </span>
+            <span className="text-gray-400">()</span>{' '}
+            <span className="text-blue-400">{'{'}</span>
+          </h1>
+          <p className="text-gray-400 font-mono">
+            // Exploring the intersection of blockchain and development
+          </p>
+        </motion.div>
 
-          <ProjectSection 
-            title="TON_PROJECTS" 
-            projects={projects.ton} 
-            icon={<FaTelegram className="w-6 h-6 text-blue-400" />} 
-          />
-          <ProjectSection 
-            title="ETH_PROJECTS" 
-            projects={projects.ethereum} 
-            icon={<FaEthereum className="w-6 h-6 text-blue-400" />} 
-          />
-          <ProjectSection 
-            title="BTC_PROJECTS" 
-            projects={projects.bitcoin} 
-            icon={<SiBitcoin className="w-6 h-6 text-orange-400" />} 
-          />
-          <ProjectSection 
-            title="CORP_PROJECTS" 
-            projects={projects.corporate} 
-            icon={<FaCode className="w-6 h-6 text-purple-400" />} 
-          />
+        <ProjectSection 
+          title="TON_PROJECTS" 
+          projects={projects.ton} 
+          icon={<FaTelegram className="w-6 h-6 text-blue-400" />} 
+        />
+        <ProjectSection 
+          title="ETH_PROJECTS" 
+          projects={projects.ethereum} 
+          icon={<FaEthereum className="w-6 h-6 text-blue-400" />} 
+        />
+        <ProjectSection 
+          title="BTC_PROJECTS" 
+          projects={projects.bitcoin} 
+          icon={<SiBitcoin className="w-6 h-6 text-orange-400" />} 
+        />
+        <ProjectSection 
+          title="CORP_PROJECTS" 
+          projects={projects.corporate} 
+          icon={<FaCode className="w-6 h-6 text-purple-400" />} 
+        />
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center mt-16"
-          >
-            <span className="text-blue-400 font-mono">{'}'}</span>
-          </motion.div>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center mt-16"
+        >
+          <span className="text-blue-400 font-mono">{'}'}</span>
+        </motion.div>
       </div>
-    </>
+    </div>
   )
 }

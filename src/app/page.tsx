@@ -1,10 +1,8 @@
 import Hero from '@/components/Hero'
-import Navbar from '@/components/Navbar'
 
 export default function Home() {
   return (
-    <main className="min-h-screen text-white">
-      <Navbar />
+    <main className="min-h-screen text-white -mt-28">
       <Hero />
     </main>
   )

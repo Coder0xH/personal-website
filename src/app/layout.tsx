@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import ClientLayout from '@/components/ClientLayout'
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} min-h-screen bg-gray-900`}>
-      <ClientLayout>
-          <div className="relative z-10">
+        <ClientLayout>
+          <Navbar />
+          <main className="pt-28">
             {children}
-          </div>
+          </main>
         </ClientLayout>
       </body>
     </html>

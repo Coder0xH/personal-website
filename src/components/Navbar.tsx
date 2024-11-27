@@ -18,11 +18,9 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'mt-4' : 'mt-8'
-    }`}>
+    <nav className="fixed top-4 left-0 right-0 z-50 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className={`mx-4 rounded-full transition-all duration-300 ${
+        <div className={`rounded-full transition-all duration-300 ${
           isScrolled 
             ? 'bg-black/85 backdrop-blur-sm shadow-lg shadow-black/20' 
             : 'bg-black/70'

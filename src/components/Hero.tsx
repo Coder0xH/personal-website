@@ -245,7 +245,7 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="max-w-4xl mx-auto w-full"
+        className="max-w-4xl mx-auto w-full relative pb-32"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -307,7 +307,7 @@ export default function Hero() {
 
         {/* Tech Stack */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-6 mt-8 text-2xl text-gray-400"
+          className="flex flex-wrap items-center justify-center gap-6 text-2xl text-gray-400 absolute -bottom-16 left-0 right-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
@@ -334,7 +334,7 @@ export default function Hero() {
 
         {/* Social Links */}
         <motion.div
-          className="flex items-center justify-center space-x-4 mt-6"
+          className="flex items-center justify-center space-x-4 absolute -bottom-28 left-0 right-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
