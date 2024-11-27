@@ -162,12 +162,21 @@ export default function Hero() {
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalContentRef = useRef<HTMLDivElement>(null)
+  const initializedRef = useRef(false)
 
   useEffect(() => {
     // 自动聚焦到输入框
     inputRef.current?.focus()
-    // 显示初始的README内容
-    handleCommand('cat README.md')
+    
+    // 防止重复初始化
+    if (!initializedRef.current) {
+      initializedRef.current = true
+      // 显示初始的README内容和个人信息
+      handleCommand('cat README.md')
+      setTimeout(() => {
+        handleCommand('cat about.md')
+      }, 500)
+    }
   }, [])
 
   useEffect(() => {
@@ -243,17 +252,19 @@ export default function Hero() {
   }
 
   return (
-    <section className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
+    <section className="px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="max-w-4xl mx-auto w-full relative pb-32"
+        className="max-w-4xl mx-auto w-full relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <motion.div
-          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
-            } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
+          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${
+            isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
+          } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
           ref={terminalRef}
+          onClick={handleTerminalClick}
         >
           {/* Terminal Header */}
           <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 flex items-center">
@@ -268,11 +279,11 @@ export default function Hero() {
           </div>
 
           {/* Terminal Content */}
-          <div ref={terminalContentRef} className="p-6 space-y-2 max-h-[60vh] overflow-y-auto">
+          <div ref={terminalContentRef} className="p-6 space-y-2 h-[400px] overflow-y-auto">
             <AnimatePresence>
               {commandHistory.map((item, index) => (
                 <motion.div
-                  key={item.timestamp}
+                  key={`${item.timestamp}-${index}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
@@ -300,6 +311,7 @@ export default function Hero() {
                 onKeyDown={handleKeyDown}
                 className="flex-1 bg-transparent outline-none text-green-400 font-mono"
                 onBlur={() => setIsTerminalFocused(false)}
+                onFocus={() => setIsTerminalFocused(true)}
               />
             </div>
           </div>
@@ -307,34 +319,34 @@ export default function Hero() {
 
         {/* Tech Stack */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-6 text-2xl text-gray-400 absolute -bottom-16 left-0 right-0"
+          className="flex flex-wrap items-center justify-center gap-6 text-2xl text-gray-400 mt-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <FaEthereum title="Ethereum" />
           </motion.div>
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <SiSolidity title="Solidity" />
           </motion.div>
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <SiWeb3Dotjs title="Web3.js" />
           </motion.div>
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <TbBrandNextjs title="Next.js" />
           </motion.div>
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <SiTypescript title="TypeScript" />
           </motion.div>
-          <motion.div className="cursor-pointer">
+          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
             <SiRust title="Rust" />
           </motion.div>
         </motion.div>
 
         {/* Social Links */}
         <motion.div
-          className="flex items-center justify-center space-x-4 absolute -bottom-28 left-0 right-0"
+          className="flex items-center justify-center space-x-4 mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}

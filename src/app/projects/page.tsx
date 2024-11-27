@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaEthereum, FaTelegram, FaCode, FaServer, FaDatabase } from 'react-icons/fa'
 import { SiSolidity, SiRust, SiWeb3Dotjs, SiBitcoin } from 'react-icons/si'
+import PageLayout from '@/components/PageLayout'
 
 interface ProjectStats {
   [key: string]: string | number;
@@ -120,6 +121,9 @@ const projects: { [key: string]: Project[] } = {
   ]
 }
 
+const blockchainProjects = [...projects.ton, ...projects.ethereum, ...projects.bitcoin]
+const fullStackProjects = [...projects.corporate]
+
 const ProjectCard = ({ project }: { project: Project }) => {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -235,55 +239,36 @@ const ProjectSection = ({ title, projects, icon }: { title: string, projects: Pr
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen text-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <PageLayout>
+      <div className="space-y-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl font-bold font-mono mb-4">
-            <span className="text-gray-400">function</span>{' '}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-              showcase_projects
-            </span>
-            <span className="text-gray-400">()</span>{' '}
-            <span className="text-blue-400">{'{'}</span>
+          <h1 className="text-5xl font-bold font-mono mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+            Projects.showcase()
           </h1>
-          <p className="text-gray-400 font-mono">
-            // Exploring the intersection of blockchain and development
-          </p>
+          <div className="text-gray-400 font-mono text-lg">
+            <span className="text-blue-400">const</span> <span className="text-purple-400">portfolio</span> = {'{'}
+            <span className="text-green-400">type</span>: <span className="text-orange-400">"Web3 + Full-Stack"</span>
+            {'}'}
+          </div>
         </motion.div>
 
-        <ProjectSection 
-          title="TON_PROJECTS" 
-          projects={projects.ton} 
-          icon={<FaTelegram className="w-6 h-6 text-blue-400" />} 
-        />
-        <ProjectSection 
-          title="ETH_PROJECTS" 
-          projects={projects.ethereum} 
-          icon={<FaEthereum className="w-6 h-6 text-blue-400" />} 
-        />
-        <ProjectSection 
-          title="BTC_PROJECTS" 
-          projects={projects.bitcoin} 
-          icon={<SiBitcoin className="w-6 h-6 text-orange-400" />} 
-        />
-        <ProjectSection 
-          title="CORP_PROJECTS" 
-          projects={projects.corporate} 
-          icon={<FaCode className="w-6 h-6 text-purple-400" />} 
+        <ProjectSection
+          title="Blockchain Projects"
+          projects={blockchainProjects}
+          icon={<FaEthereum className="w-6 h-6 text-blue-400" />}
         />
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center mt-16"
-        >
-          <span className="text-blue-400 font-mono">{'}'}</span>
-        </motion.div>
+        <ProjectSection
+          title="Full-Stack Projects"
+          projects={fullStackProjects}
+          icon={<FaCode className="w-6 h-6 text-purple-400" />}
+        />
       </div>
-    </div>
+    </PageLayout>
   )
 }

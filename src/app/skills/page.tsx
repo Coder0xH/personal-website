@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaJava, FaPython, FaReact, FaDocker, FaAws, FaLinux, FaEthereum, FaExternalLinkAlt, FaTerminal } from 'react-icons/fa'
 import { SiSolidity, SiRust, SiPostgresql, SiRedis, SiMysql, SiMongodb, SiKubernetes, SiTerraform, SiTypescript, SiJavascript, SiGo, SiWeb3Dotjs } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
+import PageLayout from '@/components/PageLayout'
 
 const skills = [
   {
@@ -317,8 +318,8 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
 
 export default function SkillsPage() {
   return (
-    <div className="min-h-screen text-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <PageLayout>
+      <div className="space-y-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -335,9 +336,9 @@ export default function SkillsPage() {
           </div>
         </motion.div>
 
-        {skills.map((category, index) => (
+        {skills.map((section, index) => (
           <motion.div
-            key={category.category}
+            key={section.category}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.2 }}
@@ -345,12 +346,12 @@ export default function SkillsPage() {
           >
             <div className="mb-6">
               <h2 className="text-2xl font-mono font-semibold mb-2 text-blue-400">
-                {category.category}
+                {section.category}
               </h2>
-              <p className="text-gray-400 font-mono text-sm">{category.description}</p>
+              <p className="text-gray-400 font-mono text-sm">{section.description}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {category.items.map((skill) => (
+              {section.items.map((skill) => (
                 <SkillBar
                   key={skill.name}
                   name={skill.name}
@@ -365,6 +366,6 @@ export default function SkillsPage() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </PageLayout>
   )
 }
