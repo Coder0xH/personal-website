@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaJava, FaPython, FaReact, FaDocker, FaAws, FaLinux, FaEthereum, FaExternalLinkAlt, FaTerminal } from 'react-icons/fa'
 import { SiSolidity, SiRust, SiPostgresql, SiRedis, SiMysql, SiMongodb, SiKubernetes, SiTerraform, SiTypescript, SiJavascript, SiGo, SiWeb3Dotjs } from 'react-icons/si'
@@ -210,7 +210,6 @@ const skills = [
 
 const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
   const [isHovered, setIsHovered] = useState(false)
-  const barRef = useRef(null)
 
   const copyToClipboard = async (text) => {
     try {
@@ -295,9 +294,15 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
                     </button>
                   </div>
                 </div>
-                <div 
-                  className="text-xs bg-gradient-to-r from-gray-900 to-gray-800 rounded p-2 border border-gray-700/50 cursor-pointer hover:border-gray-600 transition-colors"
+                <button 
+                  className="text-xs bg-gradient-to-r from-gray-900 to-gray-800 rounded p-2 border border-gray-700/50 hover:border-gray-600 transition-colors w-full text-left"
                   onClick={() => copyToClipboard(quickStart)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      copyToClipboard(quickStart)
+                    }
+                  }}
+                  aria-label="Copy quick start command"
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-green-400">$ Quick Start Command</span>
@@ -306,7 +311,7 @@ const SkillBar = ({ name, level, icon: Icon, color, docs, quickStart }) => {
                   <code className="text-orange-400">
                     {quickStart}
                   </code>
-                </div>
+                </button>
               </div>
             </motion.div>
           )}

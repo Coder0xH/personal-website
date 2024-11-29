@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 
 interface PageLayoutProps {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }
 
 export default function PageLayout({ children }: PageLayoutProps) {

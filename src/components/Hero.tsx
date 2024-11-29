@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaEthereum, FaTerminal } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEthereum } from 'react-icons/fa'
 import { SiSolidity, SiWeb3Dotjs, SiTypescript, SiRust } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
 
@@ -50,8 +50,8 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
   ls: (path = '.') => {
     if (path === '.') {
       return <div className="flex flex-wrap gap-2">
-        {Object.keys(fileSystem).map((file, i) => (
-          <span key={i}>
+        {Object.keys(fileSystem).map((file) => (
+          <span key={file}>
             {file.endsWith('/') ?
               <span className="text-blue-400">{file}</span> :
               <span className="text-yellow-400">{file}</span>
@@ -62,8 +62,8 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
     }
     if (path === 'projects') {
       return <div className="flex flex-wrap gap-2">
-        {Object.keys(fileSystem['projects/']).map((file, i) => (
-          <span key={i} className="text-yellow-400">{file}</span>
+        {Object.keys(fileSystem['projects/']).map((file) => (
+          <span key={file} className="text-yellow-400">{file}</span>
         ))}
       </div>
     }
@@ -90,7 +90,7 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
           'Blockchain Architecture',
           'Full-stack Web3 Development'
         ].map((skill, i) => (
-          <div key={i} className="text-yellow-400">
+          <div key={skill} className="text-yellow-400">
             - {skill}
           </div>
         ))}
@@ -115,9 +115,9 @@ const createAvailableCommands = (currentDirectory: string): AvailableCommands =>
     if (file === 'contact.json') {
       return <div className="text-blue-400 whitespace-pre-wrap">
         {`{
-  "email": "${<span className="text-green-400">dexter@web3.dev</span>}",
-  "telegram": "${<span className="text-green-400">@dexterdev</span>}",
-  "discord": "${<span className="text-green-400">dexter#1234</span>}"
+  "email": "dexter@web3.dev",
+  "telegram": "@dexterdev",
+  "discord": "dexter#1234"
 }`}
       </div>
     }
@@ -167,7 +167,7 @@ export default function Hero() {
   useEffect(() => {
     // 自动聚焦到输入框
     inputRef.current?.focus()
-    
+
     // 防止重复初始化
     if (!initializedRef.current) {
       initializedRef.current = true
@@ -260,9 +260,8 @@ export default function Hero() {
         transition={{ duration: 0.5 }}
       >
         <motion.div
-          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${
-            isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
-          } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
+          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
+            } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
           ref={terminalRef}
           onClick={handleTerminalClick}
         >

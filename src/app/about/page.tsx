@@ -92,6 +92,7 @@ export default function About() {
 
   const projects = [
     {
+      id: 1,
       title: "Infa Labs Website",
       role: "Lead Developer",
       tech: "Three.js, React",
@@ -100,6 +101,7 @@ export default function About() {
       linkText: "View Project"
     },
     {
+      id: 2,
       title: "MemeJump GameFi",
       role: "Full Stack Developer",
       tech: "Web3, Telegram Bot API",
@@ -164,19 +166,21 @@ export default function About() {
               </span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {skills.technical.map((skill, index) => (
+              {skills.technical.map((skill) => (
                 <motion.div
-                  key={index}
+                  key={skill.name}
                   className="group relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800"
                   whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                   variants={animations.glow}
                 >
                   <div className="flex flex-col items-center space-y-3">
-                    <div className={`p-3 rounded-lg group-hover:bg-gray-800/30 transition-colors ${skill.color}`}>
+                    <div className={`p-3 rounded-lg group-hover:bg-gray-700/50 ${skill.color}`}>
                       {skill.icon}
                     </div>
-                    <h3 className="font-semibold text-gray-200">{skill.name}</h3>
-                    <p className="text-xs text-gray-400">{skill.category}</p>
+                    <div className="text-center">
+                      <h3 className="text-sm font-semibold text-white">{skill.name}</h3>
+                      <p className="text-xs text-gray-400">{skill.category}</p>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -193,7 +197,7 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-8">
               {skills.artistic.map((skill, index) => (
                 <motion.div
-                  key={index}
+                  key={skill.title || index}
                   className="relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-gray-900 via-slate-900 to-purple-900/40"
                   whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
                 >
@@ -224,9 +228,9 @@ export default function About() {
               </span>
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
+              {projects.map((project) => (
                 <motion.div
-                  key={index}
+                  key={project.id || project.title}
                   className="group relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-slate-900 via-gray-900 to-purple-900/40 overflow-hidden"
                   whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
                 >

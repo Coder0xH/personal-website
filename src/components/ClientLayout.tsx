@@ -6,7 +6,7 @@ import AnimatedBackground from '@/components/AnimatedBackground'
 export default function ClientLayout({
   children
 }: {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }) {
   const [mounted, setMounted] = useState(false)
 
