@@ -9,9 +9,9 @@ export const metadata = {
   title: 'Dexter Ellis - Web3 Technical Director',
   description: 'Technical Director specializing in Web3, Blockchain, and Full-Stack Development',
   icons: {
-    icon: '/logo.svg',
-    shortcut: '/logo.svg',
-    apple: '/logo.svg',
+    icon: '/head-logo.svg',
+    shortcut: '/head-logo.svg',
+    apple: '/head-logo.svg',
   },
 }
 
