@@ -30,6 +30,7 @@ const nextConfig = {
     }
     return config
   },
+  postinstall: 'prisma generate',
 }
 
 export default nextConfig
