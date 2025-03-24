@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, KeyboardEvent } from 'react'
+import { useState, useEffect, useRef, KeyboardEvent, JSX } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEthereum } from 'react-icons/fa'
 import { SiSolidity, SiWeb3Dotjs, SiTypescript, SiRust } from 'react-icons/si'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { FaEthereum, FaTelegram } from 'react-icons/fa'
 import { SiRust, SiWeb3Dotjs } from 'react-icons/si'
 import { Project } from '@/types/project'

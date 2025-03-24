@@ -1,14 +1,23 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { FaEthereum, FaCode } from 'react-icons/fa'
-import PageLayout from '@/components/PageLayout'
-import { ProjectCard } from '@/components/projects/ProjectCard'
-import { Project } from '@/types/project'
-import { blockchainProjects, fullStackProjects } from '@/data/projects'
+import { motion } from "framer-motion";
+import { FaEthereum, FaCode } from "react-icons/fa";
+import PageLayout from "@/components/PageLayout";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { Project } from "@/types/project";
+import { blockchainProjects, fullStackProjects } from "@/data/projects";
+import { useEffect } from "react";
 
-const ProjectSection = ({ title, projects, icon }: { title: string, projects: Project[], icon: React.ReactNode }) => (
-  <motion.section 
+const ProjectSection = ({
+  title,
+  projects,
+  icon,
+}: {
+  title: string;
+  projects: Project[];
+  icon: React.ReactNode;
+}) => (
+  <motion.section
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     className="mb-16"
@@ -16,9 +25,9 @@ const ProjectSection = ({ title, projects, icon }: { title: string, projects: Pr
     <div className="flex items-center space-x-3 mb-6">
       {icon}
       <h2 className="text-2xl font-bold font-mono">
-        <span className="text-gray-400">const</span>{' '}
-        <span className="text-purple-400">{title}</span>{' '}
-        <span className="text-gray-400">=</span>{' '}
+        <span className="text-gray-400">const</span>{" "}
+        <span className="text-purple-400">{title}</span>{" "}
+        <span className="text-gray-400">=</span>{" "}
         <span className="text-blue-400">projects</span>
         <span className="text-gray-400">.filter()</span>
       </h2>
@@ -29,9 +38,23 @@ const ProjectSection = ({ title, projects, icon }: { title: string, projects: Pr
       ))}
     </div>
   </motion.section>
-)
+);
 
 export default function ProjectsPage() {
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/api/projects");
+        const data = await response.json();
+        console.log("projects", data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      } finally {
+      }
+    };
+
+    fetchProjects();
+  }, []);
   return (
     <PageLayout>
       <div className="space-y-12">
@@ -45,9 +68,11 @@ export default function ProjectsPage() {
             Projects.showcase()
           </h1>
           <div className="text-gray-400 font-mono text-lg">
-            <span className="text-blue-400">const</span> <span className="text-purple-400">portfolio</span> = {'{'}
-            <span className="text-green-400">type</span>: <span className="text-orange-400">"Web3 + Full-Stack"</span>
-            {'}'}
+            <span className="text-blue-400">const</span>{" "}
+            <span className="text-purple-400">portfolio</span> = {"{"}
+            <span className="text-green-400">type</span>:{" "}
+            <span className="text-orange-400">"Web3 + Full-Stack"</span>
+            {"}"}
           </div>
         </motion.div>
 
@@ -64,5 +89,5 @@ export default function ProjectsPage() {
         />
       </div>
     </PageLayout>
-  )
+  );
 }
