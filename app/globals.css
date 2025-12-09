@@ -11,6 +11,7 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
+  --background-rgb: 17, 24, 39; /* gray-900 */
 }
 
 html,
@@ -27,6 +28,7 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+  background-color: rgb(17, 24, 39); /* gray-900 */
 }
 
 /* 平滑滚动到锚点的动画 */
