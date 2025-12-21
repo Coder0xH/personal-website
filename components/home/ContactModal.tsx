@@ -24,15 +24,15 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90]"
           />
           
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-black border border-neutral-800 rounded-xl p-0 shadow-2xl z-50 overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95, x: "-50%", y: "-40%" }}
+            animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+            exit={{ opacity: 0, scale: 0.95, x: "-50%", y: "-40%" }}
+            className="fixed left-1/2 top-1/2 w-[90vw] sm:w-full max-w-md bg-black border border-neutral-800 rounded-xl p-0 shadow-2xl z-[100] overflow-hidden"
           >
             {/* Simple Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800">

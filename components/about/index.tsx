@@ -4,7 +4,7 @@ import { CoderResume } from './CoderResume';
 
 export function AboutPage() {
   return (
-    <div className="min-h-screen py-24 px-2 md:px-4 flex items-center justify-center bg-black">
+    <div className="h-[calc(100vh-7rem)] w-full pb-4 px-2 md:px-4 flex flex-col items-center justify-center bg-black overflow-hidden">
       <CoderResume />
     </div>
   );

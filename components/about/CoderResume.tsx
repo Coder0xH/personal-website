@@ -131,7 +131,7 @@ export function CoderResume() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="relative z-10 w-full max-w-[95vw] xl:max-w-[1400px] mx-auto bg-black rounded-xl overflow-hidden shadow-2xl border border-neutral-800 font-mono text-sm md:text-base flex flex-col h-[85vh] md:h-auto md:min-h-[800px]"
+      className="relative z-10 w-full max-w-[95vw] xl:max-w-[1400px] mx-auto bg-black rounded-xl overflow-hidden shadow-2xl border border-neutral-800 font-mono text-sm md:text-base flex flex-col h-full flex-1"
     >
       {/* Title Bar */}
       <div className="bg-neutral-900 h-10 flex items-center justify-between px-4 border-b border-neutral-800 select-none shrink-0">
@@ -231,13 +231,17 @@ export function CoderResume() {
                 </div>
 
                 {/* Breadcrumbs */}
-                <div className="flex items-center px-4 h-8 text-xs text-gray-500 border-b border-neutral-800 shrink-0 bg-black">
-                  src <VscChevronRight className="mx-1" /> data <VscChevronRight className="mx-1" /> {fileName}
+                <div className="flex items-center px-4 h-8 text-xs text-gray-500 border-b border-neutral-800 shrink-0 bg-black overflow-hidden">
+                  <div className="flex items-center whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="hidden sm:inline">src <VscChevronRight className="mx-1 inline" /> data <VscChevronRight className="mx-1 inline" /></span> {fileName}
+                  </div>
                   <div className="flex-1" />
-                  <span className="mr-4">Ln 1, Col 1</span>
-                  <span className="mr-4">UTF-8</span>
-                  <span className="mr-4">TypeScript React</span>
-                  <VscBell className="cursor-pointer hover:text-white" />
+                  <div className="hidden sm:flex items-center">
+                    <span className="mr-4">Ln 1, Col 1</span>
+                    <span className="mr-4">UTF-8</span>
+                    <span className="mr-4">TypeScript React</span>
+                  </div>
+                  <VscBell className="cursor-pointer hover:text-white shrink-0 ml-2" />
                 </div>
 
                 {/* Code Editor */}
