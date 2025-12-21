@@ -52,11 +52,11 @@ export const resumeDataEn: ResumeData = {
     location: "Shenzhen, China",
     attributes: [
       "Strong proactive thinking and problem-solving abilities",
-      "Passionate about new technologies, especially blockchain"
+      "Passionate about new technologies, especially blockchain and AI"
     ]
   },
   skills: {
-    languages: ["Java", "Go", "Python", "Solidity", "Rust", "TypeScript/JavaScript"],
+    languages: ["Java", "Go", "Python", "Solidity", "Rust", "TypeScript"],
     blockchain: ["EVM", "Solana", "TON", "Bitcoin (Runes)", "Smart Contracts", "DeFi"],
     backend: ["Spring Boot", "Spring Cloud", "Gin", "FastAPI", "Node.js"],
     database: ["PostgreSQL", "MySQL", "Redis", "MongoDB"],
@@ -208,8 +208,8 @@ export const resumeDataZh: ResumeData = {
     phone: "173****1995",
     location: "中国 深圳",
     attributes: [
-      "拥有很强的主动思考能力和解决问题的能力",
-      "非常喜欢新技术，特别是区块链技术"
+      "拥有很强的主观能动性和解决问题的能力",
+      "非常喜欢新技术, 包括AI的前沿技术和区块链新技术"
     ]
   },
   skills: {

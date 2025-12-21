@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaEnvelope, FaPhone, FaMapMarkerAlt, FaDownload } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import type { ResumeData } from '@/data/resume';
 
 interface PlainResumeProps {
@@ -62,10 +61,106 @@ export function PlainResume({ data }: PlainResumeProps) {
         )}
       </header>
 
+      {/* Skills */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold border-b border-gray-700 pb-2 mb-6 flex items-center gap-2 text-white">
+          SKILLS
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
+            <h3 className="font-bold text-white mb-3">Languages</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.languages.map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
+            <h3 className="font-bold text-white mb-3">Blockchain</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.blockchain.map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
+            <h3 className="font-bold text-white mb-3">Backend</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.backend.map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
+            <h3 className="font-bold text-white mb-3">Database</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.database.map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
+            <h3 className="font-bold text-white mb-3">DevOps & Cloud</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.devops.map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Personal Projects */}
+      {data.personalProjects && data.personalProjects.length > 0 && (
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold border-b border-gray-700 pb-2 mb-6 flex items-center gap-2 text-white">
+            PROJECTS
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {data.personalProjects.map((project, index) => (
+              <div key={index} className="bg-[#252526] p-5 rounded-lg border border-gray-700 hover:border-white transition-colors group">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">{project.name}</h3>
+                  {project.link && (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:underline bg-[#1e1e1e] px-2 py-1 rounded">
+                      View ↗
+                    </a>
+                  )}
+                </div>
+                <p className="text-xs text-gray-400 font-mono mb-3">
+                  {project.techStack.join(' • ')}
+                </p>
+                <p className="text-gray-300 text-sm mb-3 leading-relaxed">{project.description}</p>
+                {project.responsibilities && (
+                  <ul className="space-y-1">
+                    {project.responsibilities.map((resp, i) => (
+                      <li key={i} className="text-sm text-gray-400 flex items-start">
+                        <span className="mr-2 text-white text-xs">›</span>
+                        {resp}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Experience */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold border-b border-gray-700 pb-2 mb-6 flex items-center gap-2 text-white">
-          <span className="text-gray-500">#</span> EXPERIENCE
+          EXPERIENCE
         </h2>
         <div className="space-y-10">
           {data.experience.map((exp, index) => (
@@ -119,92 +214,6 @@ export function PlainResume({ data }: PlainResumeProps) {
         </div>
       </section>
 
-      {/* Skills */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold border-b border-gray-700 pb-2 mb-6 flex items-center gap-2 text-white">
-          <span className="text-gray-500">#</span> SKILLS
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
-            <h3 className="font-bold text-white mb-3">Languages</h3>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.languages.map((skill, i) => (
-                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
-            <h3 className="font-bold text-white mb-3">Blockchain</h3>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.blockchain.map((skill, i) => (
-                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
-            <h3 className="font-bold text-white mb-3">Backend</h3>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.backend.map((skill, i) => (
-                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="bg-[#252526] p-5 rounded-lg border border-gray-700">
-            <h3 className="font-bold text-white mb-3">DevOps & Cloud</h3>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.devops.map((skill, i) => (
-                <span key={i} className="px-2 py-1 bg-[#3e3e3e] text-gray-200 text-sm rounded font-mono">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Personal Projects */}
-      {data.personalProjects && data.personalProjects.length > 0 && (
-        <section>
-          <h2 className="text-2xl font-bold border-b border-gray-700 pb-2 mb-6 flex items-center gap-2 text-white">
-            <span className="text-gray-500">#</span> PROJECTS
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {data.personalProjects.map((project, index) => (
-              <div key={index} className="bg-[#252526] p-5 rounded-lg border border-gray-700 hover:border-white transition-colors group">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">{project.name}</h3>
-                  {project.link && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-xs text-white hover:underline bg-[#1e1e1e] px-2 py-1 rounded">
-                      View ↗
-                    </a>
-                  )}
-                </div>
-                <p className="text-xs text-gray-400 font-mono mb-3">
-                  {project.techStack.join(' • ')}
-                </p>
-                <p className="text-gray-300 text-sm mb-3 leading-relaxed">{project.description}</p>
-                {project.responsibilities && (
-                  <ul className="space-y-1">
-                    {project.responsibilities.map((resp, i) => (
-                      <li key={i} className="text-sm text-gray-400 flex items-start">
-                        <span className="mr-2 text-white text-xs">›</span>
-                        {resp}
-                      </li>
-                    ))}
-                  </ul>
-
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
     </motion.div>
   );
 }
