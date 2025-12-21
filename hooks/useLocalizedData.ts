@@ -14,16 +14,11 @@ export function useSkillsData() {
     const { t } = useLanguage();
 
     const localizedSkills: SkillCategory[] = initialSkills.map((category) => {
-        // Determine the key based on category name (simplified)
-        // Mapping: "Blockchain Development" -> "blockchain", "Backend Development" -> "backend", etc.
-        // Ideally, we should probably add ids to the original data, but mapping by index or checking content is a workaround.
-        // Let's use a cleaner approach: matching strictly by the known order or name mapping.
-
         let categoryKey = '';
-        if (category.category.includes('Blockchain')) categoryKey = 'blockchain';
+        if (category.category.includes('Programming')) categoryKey = 'programming';
+        else if (category.category.includes('Blockchain')) categoryKey = 'blockchain';
         else if (category.category.includes('Backend')) categoryKey = 'backend';
         else if (category.category.includes('Frontend')) categoryKey = 'frontend';
-        else if (category.category.includes('Database')) categoryKey = 'database';
         else if (category.category.includes('DevOps')) categoryKey = 'devops';
 
         if (!categoryKey) return category;
@@ -33,26 +28,31 @@ export function useSkillsData() {
 
         const localizedItems = category.items.map((item) => {
             let itemKey = '';
-            if (item.name.includes('Solidity')) itemKey = 'solidity';
+            // Programming Languages
+            if (item.name === 'Java') itemKey = 'java';
+            else if (item.name === 'Python') itemKey = 'python';
+            else if (item.name === 'Go') itemKey = 'go';
+            else if (item.name === 'Rust') itemKey = 'rust';
+            else if (item.name === 'TypeScript') itemKey = 'typescript';
+            
+            // Blockchain
+            else if (item.name.includes('Solidity')) itemKey = 'solidity';
             else if (item.name.includes('Web3')) itemKey = 'web3';
-            else if (item.name.includes('Solana')) itemKey = 'rust'; // "Rust/Solana" in json
+            else if (item.name.includes('Solana')) itemKey = 'rust'; // "Rust/Solana"
             else if (item.name.includes('DeFi')) itemKey = 'defi';
 
-            else if (item.name === 'Java/Spring Boot') itemKey = 'java';
-            else if (item.name === 'Python') itemKey = 'python';
-            else if (item.name === 'Rust') itemKey = 'rust';
-            else if (item.name === 'Go') itemKey = 'go';
-
-            else if (item.name === 'React') itemKey = 'react';
-            else if (item.name === 'Next.js') itemKey = 'next';
-            else if (item.name === 'TypeScript') itemKey = 'typescript';
-            else if (item.name === 'JavaScript') itemKey = 'javascript';
-
-            else if (item.name === 'PostgreSQL') itemKey = 'postgresql';
+            // Backend
+            else if (item.name === 'Spring Boot') itemKey = 'spring';
             else if (item.name === 'Redis') itemKey = 'redis';
-            else if (item.name === 'MySQL') itemKey = 'mysql';
+            else if (item.name === 'PostgreSQL') itemKey = 'postgresql';
             else if (item.name === 'MongoDB') itemKey = 'mongodb';
 
+            // Frontend
+            else if (item.name === 'React') itemKey = 'react';
+            else if (item.name === 'Next.js') itemKey = 'next';
+            else if (item.name === 'JavaScript') itemKey = 'javascript';
+
+            // DevOps
             else if (item.name === 'Docker') itemKey = 'docker';
             else if (item.name === 'Kubernetes') itemKey = 'kubernetes';
             else if (item.name === 'AWS') itemKey = 'aws';

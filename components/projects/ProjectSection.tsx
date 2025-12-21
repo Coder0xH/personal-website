@@ -12,28 +12,34 @@ interface ProjectWithIcon extends Omit<Project, 'icon'> {
 interface ProjectSectionProps {
   title: string;
   projects: ProjectWithIcon[];
-  icon: ReactNode;
+  description?: string;
 }
 
-export function ProjectSection({ title, projects, icon }: ProjectSectionProps) {
+export function ProjectSection({ title, projects, description }: ProjectSectionProps) {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="mb-16"
-    >
-      <div className="flex items-center space-x-3 mb-6 border-b border-neutral-800 pb-4">
-        <div className="text-white">{icon}</div>
-        <h2 className="text-2xl font-bold font-mono text-white">
+    <div className="mb-24 last:mb-0">
+      <div className="flex flex-col md:flex-row md:items-baseline md:space-x-6 mb-8 border-b border-neutral-800 pb-4">
+        <h2 className="text-2xl md:text-3xl font-mono font-bold text-white tracking-tighter">
           {title}
         </h2>
+        {description && (
+          <p className="text-neutral-500 font-mono text-sm mt-2 md:mt-0">
+            {description}
+          </p>
+        )}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         {projects.map((project) => (
           <ProjectCard key={project.title} project={project} />
         ))}
-      </div>
-    </motion.section>
+      </motion.div>
+    </div>
   );
 }
-

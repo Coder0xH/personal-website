@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { resumeDataEn, resumeDataZh } from '@/data/resume';
 import { useLanguage } from '@/lib/context/LanguageContext';
-import { VscJson, VscChevronRight, VscChevronDown, VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscSettingsGear, VscBell } from 'react-icons/vsc';
+import { VscJson, VscChevronRight, VscChevronDown, VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscSettingsGear, VscBell, VscPreview, VscCode } from 'react-icons/vsc';
 import { SiTypescript } from 'react-icons/si';
+import { PlainResume } from './PlainResume';
 
 // Syntax highlighting colors (One Dark Pro inspired - Adjusted for better contrast)
 const colors = {
@@ -20,17 +21,6 @@ const colors = {
   function: 'text-[#61afef]', // Blue
 };
 
-const Line = ({ number, children }: { number: number; children: React.ReactNode }) => (
-  <div className="flex hover:bg-[#2c313a] transition-colors group">
-    <div className="w-12 shrink-0 text-right pr-4 text-[#495162] select-none text-sm font-mono leading-6 group-hover:text-[#abb2bf]">
-      {number}
-    </div>
-    <div className="font-mono text-sm leading-6 whitespace-pre-wrap break-all">
-      {children}
-    </div>
-  </div>
-);
-
 const JsonViewer = ({ data, level = 0 }: { data: any; level?: number }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   
@@ -40,12 +30,12 @@ const JsonViewer = ({ data, level = 0 }: { data: any; level?: number }) => {
   if (Array.isArray(data)) {
     if (data.length === 0) return <span className={colors.punctuation}>[]</span>;
     
-    const isSimple = data.every(item => ['string', 'number', 'boolean'].includes(typeof item));
+    const isSimple = data.every((item: any) => ['string', 'number', 'boolean'].includes(typeof item));
     if (isSimple && JSON.stringify(data).length < 80) {
        return (
          <span>
            <span className={colors.punctuation}>[</span>
-           {data.map((item, i) => (
+           {data.map((item: any, i: number) => (
              <React.Fragment key={i}>
                {i > 0 && <span className={colors.punctuation}>, </span>}
                <span className={typeof item === 'string' ? colors.string : colors.number}>
@@ -70,7 +60,7 @@ const JsonViewer = ({ data, level = 0 }: { data: any; level?: number }) => {
         
         {isExpanded && (
           <>
-            {data.map((item, i) => (
+            {data.map((item: any, i: number) => (
               <div key={i} style={{ paddingLeft: '1.5rem', borderLeft: '1px solid #3e4451' }} className="ml-1">
                  <JsonViewer data={item} level={0} />
                  {i < data.length - 1 && <span className={colors.punctuation}>,</span>}
@@ -132,6 +122,7 @@ const JsonViewer = ({ data, level = 0 }: { data: any; level?: number }) => {
 
 export function CoderResume() {
   const { language } = useLanguage();
+  const [viewMode, setViewMode] = useState<'code' | 'plain'>('code');
   const resumeData = language === 'zh' ? resumeDataZh : resumeDataEn;
   const fileName = language === 'zh' ? 'resume.zh.ts' : 'resume.ts';
 
@@ -143,7 +134,7 @@ export function CoderResume() {
       className="relative z-10 w-full max-w-[95vw] xl:max-w-[1400px] mx-auto bg-black rounded-xl overflow-hidden shadow-2xl border border-neutral-800 font-mono text-sm md:text-base flex flex-col h-[85vh] md:h-auto md:min-h-[800px]"
     >
       {/* Title Bar */}
-      <div className="bg-neutral-900 h-10 flex items-center justify-between px-4 border-b border-neutral-800 select-none">
+      <div className="bg-neutral-900 h-10 flex items-center justify-between px-4 border-b border-neutral-800 select-none shrink-0">
         <div className="flex items-center space-x-4">
           <div className="flex space-x-2 group">
             <div className="w-3 h-3 rounded-full bg-[#ff5f56] group-hover:bg-[#ff5f56]/80 transition-colors" />
@@ -153,7 +144,6 @@ export function CoderResume() {
           <div className="hidden md:flex text-gray-500 text-xs space-x-4 ml-4">
             <span className="hover:text-white cursor-pointer">File</span>
             <span className="hover:text-white cursor-pointer">Edit</span>
-            <span className="hover:text-white cursor-pointer">Selection</span>
             <span className="hover:text-white cursor-pointer">View</span>
             <span className="hover:text-white cursor-pointer">Go</span>
             <span className="hover:text-white cursor-pointer">Run</span>
@@ -161,98 +151,123 @@ export function CoderResume() {
             <span className="hover:text-white cursor-pointer">Help</span>
           </div>
         </div>
-        <div className="text-gray-500 text-xs flex items-center">
-          <span className="hidden md:inline">dexter-portfolio — </span>
-          <span className="ml-1">{fileName}</span>
+        
+        {/* View Toggle */}
+        <div className="flex items-center space-x-2 bg-black rounded-lg p-0.5 border border-neutral-800">
+          <button
+            onClick={() => setViewMode('code')}
+            className={`px-2 py-0.5 rounded text-xs flex items-center space-x-1 transition-colors ${
+              viewMode === 'code' ? 'bg-neutral-800 text-white' : 'text-gray-500 hover:text-white'
+            }`}
+          >
+            <VscCode />
+            <span className="hidden sm:inline">Code</span>
+          </button>
+          <button
+            onClick={() => setViewMode('plain')}
+            className={`px-2 py-0.5 rounded text-xs flex items-center space-x-1 transition-colors ${
+              viewMode === 'plain' ? 'bg-neutral-800 text-white' : 'text-gray-500 hover:text-white'
+            }`}
+          >
+            <VscPreview />
+            <span className="hidden sm:inline">Preview</span>
+          </button>
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Activity Bar */}
         <div className="w-12 bg-neutral-900 flex flex-col items-center py-4 space-y-6 text-gray-500 border-r border-neutral-800 hidden md:flex shrink-0">
-          <VscFiles className="w-6 h-6 text-white cursor-pointer border-l-2 border-white pl-2 -ml-2" />
-          <VscSearch className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
-          <VscSourceControl className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
-          <VscDebugAlt className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
-          <VscExtensions className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
+          <VscFiles className={`w-6 h-6 cursor-pointer border-l-2 pl-2 -ml-2 transition-colors ${viewMode === 'code' ? 'text-white border-white' : 'text-gray-500 border-transparent hover:text-white'}`} onClick={() => setViewMode('code')} />
+          <VscPreview className={`w-6 h-6 cursor-pointer border-l-2 pl-2 -ml-2 transition-colors ${viewMode === 'plain' ? 'text-white border-white' : 'text-gray-500 border-transparent hover:text-white'}`} onClick={() => setViewMode('plain')} />
           <div className="flex-1" />
-          <VscAccount className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
           <VscSettingsGear className="w-6 h-6 hover:text-white cursor-pointer transition-colors" />
         </div>
 
-        {/* Sidebar */}
-        <div className="w-64 bg-black hidden lg:block border-r border-neutral-800 shrink-0">
-          <div className="flex items-center justify-between px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
-            <span>Explorer</span>
-            <span className="hover:bg-neutral-800 rounded p-1 cursor-pointer">...</span>
-          </div>
-          <div className="mt-2">
-            <div className="px-2 py-1 flex items-center text-gray-300 hover:bg-neutral-900 cursor-pointer font-bold text-xs">
-              <VscChevronDown className="mr-1" />
-              <span>PORTFOLIO</span>
+        {/* Sidebar (Only visible in Code View) */}
+        {viewMode === 'code' && (
+          <div className="w-64 bg-black hidden lg:block border-r border-neutral-800 shrink-0">
+            <div className="flex items-center justify-between px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
+              <span>Explorer</span>
+              <span className="hover:bg-neutral-800 rounded p-1 cursor-pointer">...</span>
             </div>
-            <div className="pl-4">
-              <div className="py-1 flex items-center text-white bg-neutral-900 cursor-pointer border-l-2 border-blue-500 pl-2">
-                <SiTypescript className="mr-2 w-4 h-4 text-blue-400" />
-                {fileName}
+            <div className="mt-2">
+              <div className="px-2 py-1 flex items-center text-gray-300 hover:bg-neutral-900 cursor-pointer font-bold text-xs">
+                <VscChevronDown className="mr-1" />
+                <span>PORTFOLIO</span>
               </div>
-              <div className="py-1 flex items-center text-gray-500 hover:bg-neutral-900 cursor-pointer pl-2.5 border-l-2 border-transparent">
-                <VscJson className="mr-2 w-4 h-4 text-yellow-500" />
-                package.json
-              </div>
-              <div className="py-1 flex items-center text-gray-500 hover:bg-neutral-900 cursor-pointer pl-2.5 border-l-2 border-transparent">
-                <span className="mr-2 text-gray-500 w-4 text-center">#</span>
-                README.md
-              </div>
-              <div className="py-1 flex items-center text-gray-500 hover:bg-neutral-900 cursor-pointer pl-2.5 border-l-2 border-transparent">
-                <span className="mr-2 text-gray-500 w-4 text-center">.</span>
-                gitignore
+              <div className="pl-4">
+                <div className="py-1 flex items-center text-white bg-neutral-900 cursor-pointer border-l-2 border-blue-500 pl-2">
+                  <SiTypescript className="mr-2 w-4 h-4 text-blue-400" />
+                  {fileName}
+                </div>
+                <div className="py-1 flex items-center text-gray-500 hover:bg-neutral-900 cursor-pointer pl-2.5 border-l-2 border-transparent">
+                  <VscJson className="mr-2 w-4 h-4 text-yellow-500" />
+                  package.json
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Editor Area */}
-        <div className="flex-1 bg-black flex flex-col overflow-hidden">
-          {/* Tabs */}
-          <div className="flex bg-neutral-900 h-9 shrink-0 overflow-x-auto scrollbar-hide">
-            <div className="flex items-center px-4 bg-black text-white text-sm border-t-2 border-blue-500 min-w-fit pr-8 relative group cursor-pointer">
-              <SiTypescript className="mr-2 text-blue-400 w-4 h-4" />
-              {fileName}
-              <span className="absolute right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:bg-neutral-800 rounded-full p-0.5">×</span>
-            </div>
-            <div className="flex items-center px-4 text-gray-500 text-sm border-t-2 border-transparent hover:bg-neutral-800 cursor-pointer min-w-fit pr-8 relative group border-r border-neutral-800">
-              <VscJson className="mr-2 text-yellow-500 w-4 h-4" />
-              package.json
-              <span className="absolute right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:bg-neutral-800 rounded-full p-0.5">×</span>
-            </div>
-          </div>
+        {/* Main Content Area */}
+        <div className="flex-1 bg-[#1e1e1e] flex flex-col overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            {viewMode === 'code' ? (
+              <motion.div
+                key="code"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-col h-full bg-black"
+              >
+                {/* Tabs */}
+                <div className="flex bg-neutral-900 h-9 shrink-0 overflow-x-auto scrollbar-hide">
+                  <div className="flex items-center px-4 bg-black text-white text-sm border-t-2 border-blue-500 min-w-fit pr-8 relative group cursor-pointer">
+                    <SiTypescript className="mr-2 text-blue-400 w-4 h-4" />
+                    {fileName}
+                    <span className="absolute right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:bg-neutral-800 rounded-full p-0.5">×</span>
+                  </div>
+                </div>
 
-          {/* Breadcrumbs */}
-          <div className="flex items-center px-4 h-8 text-xs text-gray-500 border-b border-neutral-800 shrink-0">
-            src <VscChevronRight className="mx-1" /> data <VscChevronRight className="mx-1" /> {fileName}
-            <div className="flex-1" />
-            <span className="mr-4">Ln 208, Col 35</span>
-            <span className="mr-4">UTF-8</span>
-            <span className="mr-4">TypeScript React</span>
-            <VscBell className="cursor-pointer hover:text-white" />
-          </div>
+                {/* Breadcrumbs */}
+                <div className="flex items-center px-4 h-8 text-xs text-gray-500 border-b border-neutral-800 shrink-0 bg-black">
+                  src <VscChevronRight className="mx-1" /> data <VscChevronRight className="mx-1" /> {fileName}
+                  <div className="flex-1" />
+                  <span className="mr-4">Ln 1, Col 1</span>
+                  <span className="mr-4">UTF-8</span>
+                  <span className="mr-4">TypeScript React</span>
+                  <VscBell className="cursor-pointer hover:text-white" />
+                </div>
 
-          {/* Code Content */}
-          <div className="flex-1 overflow-auto custom-scrollbar p-4">
-            <div className="font-mono text-sm md:text-base leading-relaxed">
-              <div className="text-gray-500 italic mb-4">
-                // Welcome to my interactive resume. <br/>
-                // Feel free to explore the data structure below.
-              </div>
-              <span className={colors.keyword}>export const </span>
-              <span className={colors.function}>resume </span>
-              <span className={colors.punctuation}>= </span>
-              <JsonViewer data={resumeData} />
-              <span className={colors.punctuation}>;</span>
-            </div>
-            <div className="h-32" /> {/* Bottom spacing */}
-          </div>
+                {/* Code Editor */}
+                <div className="flex-1 overflow-auto custom-scrollbar p-4 bg-black">
+                  <div className="font-mono text-sm md:text-base leading-relaxed">
+                    <div className="text-gray-500 italic mb-4">
+                      // Welcome to my interactive resume. <br/>
+                      // Switch to "Preview" mode for a readable version.
+                    </div>
+                    <span className={colors.keyword}>export const </span>
+                    <span className={colors.function}>resume </span>
+                    <span className={colors.punctuation}>= </span>
+                    <JsonViewer data={resumeData} />
+                    <span className={colors.punctuation}>;</span>
+                  </div>
+                  <div className="h-32" />
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="plain"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex-1 overflow-auto custom-scrollbar bg-[#1e1e1e] p-0"
+              >
+                <PlainResume data={resumeData} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>

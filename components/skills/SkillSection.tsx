@@ -11,17 +11,23 @@ interface SkillSectionProps {
 
 export function SkillSection({ section, index }: SkillSectionProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2 }}
-      className="relative mb-16"
-    >
-      <div className="mb-6 flex items-baseline space-x-4 border-b border-neutral-800 pb-4">
-        <h2 className="text-2xl font-mono font-semibold text-white">{section.category}</h2>
-        <p className="text-neutral-500 font-mono text-sm">// {section.description}</p>
+    <div className="mb-20 last:mb-0">
+      <div className="flex flex-col md:flex-row md:items-baseline md:space-x-6 mb-8 border-b border-neutral-800 pb-4">
+        <h2 className="text-2xl md:text-3xl font-mono font-bold text-white tracking-tighter">
+          {section.category}
+        </h2>
+        <p className="text-neutral-500 font-mono text-sm mt-2 md:mt-0">
+          {section.description}
+        </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
         {section.items.map((skill) => (
           <SkillBar
             key={skill.name}
@@ -33,8 +39,7 @@ export function SkillSection({ section, index }: SkillSectionProps) {
             quickStart={skill.quickStart}
           />
         ))}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
-

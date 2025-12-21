@@ -24,6 +24,15 @@
         }
     },
     "skills": {
+        "programming": {
+            "category": "Programming Languages",
+            "description": "// Core languages I use daily",
+            "java": "Java",
+            "python": "Python",
+            "go": "Go",
+            "rust": "Rust",
+            "typescript": "TypeScript"
+        },
         "blockchain": {
             "category": "Blockchain Development",
             "description": "// Smart contract development and Web3 integration",
@@ -35,26 +44,17 @@
         "backend": {
             "category": "Backend Development",
             "description": "// Building scalable server-side applications",
-            "java": "Java/Spring Boot",
-            "python": "Python",
-            "rust": "Rust",
-            "go": "Go"
+            "spring": "Spring Boot",
+            "redis": "Redis",
+            "postgresql": "PostgreSQL",
+            "mongodb": "MongoDB"
         },
         "frontend": {
             "category": "Frontend Development",
             "description": "// Creating responsive and interactive UIs",
             "react": "React",
             "next": "Next.js",
-            "typescript": "TypeScript",
             "javascript": "JavaScript"
-        },
-        "database": {
-            "category": "Database & Cache",
-            "description": "// Managing data storage and optimization",
-            "postgresql": "PostgreSQL",
-            "redis": "Redis",
-            "mysql": "MySQL",
-            "mongodb": "MongoDB"
         },
         "devops": {
             "category": "DevOps & Cloud",
@@ -67,6 +67,11 @@
         }
     },
     "projects": {
+        "header": {
+            "backend": "\"High-Performance Backend\"",
+            "blockchain": "\"Blockchain & Web3\"",
+            "fullstack": "\"Full-Stack Apps\""
+        },
         "memejump": {
             "title": "MemeJump GameFi Platform",
             "description": "A Play-to-Earn gaming platform built as a Telegram mini-app",

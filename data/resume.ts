@@ -115,7 +115,7 @@ export const resumeDataEn: ResumeData = {
       projects: [
         {
           name: "Ton Short (Short Drama Platform)",
-          period: "2024.09 - Present",
+          period: "2024.09 - 2025.06",
           techStack: ["Next.js", "Spring Boot 3.4", "Spring Security", "TON (FunC)", "PostgreSQL"],
           description: "Telegram Mini App for short dramas with crypto payments and social login.",
           responsibilities: [
@@ -267,7 +267,7 @@ export const resumeDataZh: ResumeData = {
     },
     {
       company: "深圳亿展缘科技公司",
-      period: "2024.06 - 至今",
+      period: "2024.06 - 2025.06",
       role: "全栈开发 & 项目经理",
       projects: [
         {

@@ -24,6 +24,15 @@
         }
     },
     "skills": {
+        "programming": {
+            "category": "编程语言",
+            "description": "// 核心开发语言",
+            "java": "Java",
+            "python": "Python",
+            "go": "Go",
+            "rust": "Rust",
+            "typescript": "TypeScript"
+        },
         "blockchain": {
             "category": "区块链开发",
             "description": "// 智能合约开发与 Web3 集成",
@@ -35,26 +44,17 @@
         "backend": {
             "category": "后端开发",
             "description": "// 构建可扩展的服务端应用",
-            "java": "Java/Spring Boot",
-            "python": "Python",
-            "rust": "Rust",
-            "go": "Go"
+            "spring": "Spring Boot",
+            "redis": "Redis",
+            "postgresql": "PostgreSQL",
+            "mongodb": "MongoDB"
         },
         "frontend": {
             "category": "前端开发",
             "description": "// 创建响应式交互界面",
             "react": "React",
             "next": "Next.js",
-            "typescript": "TypeScript",
             "javascript": "JavaScript"
-        },
-        "database": {
-            "category": "数据库与缓存",
-            "description": "// 数据存储管理与优化",
-            "postgresql": "PostgreSQL",
-            "redis": "Redis",
-            "mysql": "MySQL",
-            "mongodb": "MongoDB"
         },
         "devops": {
             "category": "运维与云服务",
@@ -67,6 +67,11 @@
         }
     },
     "projects": {
+        "header": {
+            "backend": "\"高性能后端架构\"",
+            "blockchain": "\"区块链与 Web3\"",
+            "fullstack": "\"全栈应用解决方案\""
+        },
         "memejump": {
             "title": "MemeJump GameFi 平台",
             "description": "基于 Telegram 小程序的 Play-to-Earn 游戏平台",
