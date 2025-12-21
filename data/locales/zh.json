@@ -1,0 +1,126 @@
+{
+    "nav": {
+        "home": "主页",
+        "about": "简历",
+        "skills": "技能",
+        "projects": "项目"
+    },
+    "home": {
+        "hero": {
+            "badge": "寻求合作",
+            "title_prefix": "构建智能",
+            "title_highlight": "量化与 AI Agent 系统",
+            "subtitle_prefix": "我是",
+            "subtitle_name": "Dexter",
+            "subtitle_role": "一名量化交易与 AI Agent 开发者。",
+            "subtitle_desc": "我使用 Go 构建高并发微服务，并用 Python 开发智能 Agent。",
+            "cta_projects": "查看项目",
+            "cta_contact": "联系我",
+            "code": {
+                "mission": "优化 Alpha 收益",
+                "comment1": "# 初始化量化 Agent",
+                "comment2": "# 加载策略模型"
+            }
+        }
+    },
+    "skills": {
+        "blockchain": {
+            "category": "区块链开发",
+            "description": "// 智能合约开发与 Web3 集成",
+            "solidity": "智能合约 (Solidity)",
+            "web3": "Web3.js/Ethers.js",
+            "rust": "Rust/Solana",
+            "defi": "DeFi 协议"
+        },
+        "backend": {
+            "category": "后端开发",
+            "description": "// 构建可扩展的服务端应用",
+            "java": "Java/Spring Boot",
+            "python": "Python",
+            "rust": "Rust",
+            "go": "Go"
+        },
+        "frontend": {
+            "category": "前端开发",
+            "description": "// 创建响应式交互界面",
+            "react": "React",
+            "next": "Next.js",
+            "typescript": "TypeScript",
+            "javascript": "JavaScript"
+        },
+        "database": {
+            "category": "数据库与缓存",
+            "description": "// 数据存储管理与优化",
+            "postgresql": "PostgreSQL",
+            "redis": "Redis",
+            "mysql": "MySQL",
+            "mongodb": "MongoDB"
+        },
+        "devops": {
+            "category": "运维与云服务",
+            "description": "// 基础设施与部署自动化",
+            "docker": "Docker",
+            "kubernetes": "Kubernetes",
+            "aws": "AWS",
+            "terraform": "Terraform",
+            "linux": "Linux"
+        }
+    },
+    "projects": {
+        "memejump": {
+            "title": "MemeJump GameFi 平台",
+            "description": "基于 Telegram 小程序的 Play-to-Earn 游戏平台",
+            "highlights": [
+                "集成 Web3 的 Three.js 跳跃游戏",
+                "高并发 Java Spring Boot 后端",
+                "基于 V4R2 的托管钱包系统",
+                "用于平台费用的多签钱包系统"
+            ]
+        },
+        "memeshorts": {
+            "title": "MemeShorts 短剧平台",
+            "description": "基于 Telegram 小程序的短视频平台",
+            "highlights": [
+                "Next.js SSR 前端",
+                "Spring Boot 微服务",
+                "OAuth 2.0 社交集成",
+                "TON 支付系统"
+            ]
+        },
+        "saluki": {
+            "title": "Saluki 代币平台",
+            "description": "具有高级智能合约的代币铸造平台",
+            "highlights": [
+                "自定义 Solidity 智能合约",
+                "基于 Create2 的工厂合约",
+                "自动合约验证",
+                "Uniswap 集成"
+            ]
+        },
+        "runes": {
+            "title": "Runes 优化系统",
+            "description": "高级 Runes 交易优化系统",
+            "highlights": [
+                "使用 Rust 实现的链式铸造",
+                "铸造成本降低 30%",
+                "批处理优化",
+                "自定义交易构建"
+            ]
+        },
+        "infalabs": {
+            "title": "Infa Labs 官网",
+            "description": "展示区块链技术的互动式企业网站",
+            "highlights": [
+                "Three.js 3D 可视化",
+                "React 交互组件",
+                "响应式设计",
+                "现代动画效果"
+            ]
+        }
+    },
+    "resume": {
+        "download": "下载简历",
+        "print": "打印",
+        "title": "个人简历"
+    }
+}

@@ -17,7 +17,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
 
   return (
     <>
-      <AnimatedBackground />
+      {/* <AnimatedBackground /> - Temporarily disabled for cleaner look */}
       {children}
     </>
   );

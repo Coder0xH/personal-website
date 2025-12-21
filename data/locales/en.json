@@ -1,0 +1,126 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "Resume",
+        "skills": "Skills",
+        "projects": "Projects"
+    },
+    "home": {
+        "hero": {
+            "badge": "Open to Work",
+            "title_prefix": "Engineering",
+            "title_highlight": "AI & Quant Systems",
+            "subtitle_prefix": "I am",
+            "subtitle_name": "Dexter",
+            "subtitle_role": "an AI Agent Developer & Quant Engineer.",
+            "subtitle_desc": "I build high-concurrency Go microservices and intelligent Python AI agents.",
+            "cta_projects": "View Projects",
+            "cta_contact": "Contact Me",
+            "code": {
+                "mission": "Optimize Alpha",
+                "comment1": "# Initialize Quant Agent",
+                "comment2": "# Load Strategy Models"
+            }
+        }
+    },
+    "skills": {
+        "blockchain": {
+            "category": "Blockchain Development",
+            "description": "// Smart contract development and Web3 integration",
+            "solidity": "Smart Contracts (Solidity)",
+            "web3": "Web3.js/Ethers.js",
+            "rust": "Rust/Solana",
+            "defi": "DeFi Protocols"
+        },
+        "backend": {
+            "category": "Backend Development",
+            "description": "// Building scalable server-side applications",
+            "java": "Java/Spring Boot",
+            "python": "Python",
+            "rust": "Rust",
+            "go": "Go"
+        },
+        "frontend": {
+            "category": "Frontend Development",
+            "description": "// Creating responsive and interactive UIs",
+            "react": "React",
+            "next": "Next.js",
+            "typescript": "TypeScript",
+            "javascript": "JavaScript"
+        },
+        "database": {
+            "category": "Database & Cache",
+            "description": "// Managing data storage and optimization",
+            "postgresql": "PostgreSQL",
+            "redis": "Redis",
+            "mysql": "MySQL",
+            "mongodb": "MongoDB"
+        },
+        "devops": {
+            "category": "DevOps & Cloud",
+            "description": "// Infrastructure and deployment automation",
+            "docker": "Docker",
+            "kubernetes": "Kubernetes",
+            "aws": "AWS",
+            "terraform": "Terraform",
+            "linux": "Linux"
+        }
+    },
+    "projects": {
+        "memejump": {
+            "title": "MemeJump GameFi Platform",
+            "description": "A Play-to-Earn gaming platform built as a Telegram mini-app",
+            "highlights": [
+                "Three.js-powered jump game with Web3 integration",
+                "High-concurrency Java Spring Boot backend",
+                "Custodial wallet system with V4R2 implementation",
+                "Multi-signature wallet system for platform fees"
+            ]
+        },
+        "memeshorts": {
+            "title": "MemeShorts Platform",
+            "description": "Short video platform built as a Telegram mini-app",
+            "highlights": [
+                "Next.js frontend with SSR",
+                "Spring Boot microservices",
+                "OAuth 2.0 social integration",
+                "TON payment system"
+            ]
+        },
+        "saluki": {
+            "title": "Saluki Token Platform",
+            "description": "Token minting platform with advanced smart contracts",
+            "highlights": [
+                "Custom Solidity smart contracts",
+                "Factory contract with Create2",
+                "Automated contract verification",
+                "Uniswap integration"
+            ]
+        },
+        "runes": {
+            "title": "Runes Optimization System",
+            "description": "Advanced Runes transaction optimization system",
+            "highlights": [
+                "Rust implementation of chain-mint",
+                "30% cost reduction in minting",
+                "Batch processing optimization",
+                "Custom transaction construction"
+            ]
+        },
+        "infalabs": {
+            "title": "Infa Labs Website",
+            "description": "Interactive corporate website showcasing blockchain technology",
+            "highlights": [
+                "Three.js 3D visualizations",
+                "React interactive components",
+                "Responsive design",
+                "Modern animations"
+            ]
+        }
+    },
+    "resume": {
+        "download": "Download Resume",
+        "print": "Print",
+        "title": "Resume"
+    }
+}

@@ -40,28 +40,28 @@ interface ProjectsPreviewProps {
 export function ProjectsPreview({ variants }: ProjectsPreviewProps) {
   return (
     <motion.section variants={variants}>
-      <h2 className="text-3xl font-bold text-center mb-12 font-mono">
-        <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 font-mono">
+        <span className="text-white">
           Projects.showcase()
         </span>
       </h2>
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {featuredProjects.map((project) => (
           <motion.div
             key={project.id || project.title}
-            className="group relative p-6 rounded-xl border border-gray-700/50 bg-gradient-to-br from-slate-900 via-gray-900 to-purple-900/40 overflow-hidden"
+            className="group relative p-5 sm:p-6 rounded-xl border border-neutral-800 bg-black overflow-hidden"
             whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <h3 className="text-xl font-semibold text-gray-200 mb-1">{project.title}</h3>
-            <p className="text-blue-400 text-sm mb-2">{project.role}</p>
-            <p className="text-purple-400 text-sm mb-3">{project.tech}</p>
-            <p className="text-gray-400 mb-4">{project.description}</p>
+            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-200 mb-1">{project.title}</h3>
+            <p className="text-neutral-400 text-xs sm:text-sm mb-2">{project.role}</p>
+            <p className="text-neutral-500 text-xs sm:text-sm mb-3">{project.tech}</p>
+            <p className="text-gray-400 text-sm sm:text-base mb-4">{project.description}</p>
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
+              className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors text-sm sm:text-base"
             >
               <span>{project.linkText}</span>
               <span>→</span>

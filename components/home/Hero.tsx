@@ -1,428 +1,186 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback, type KeyboardEvent, type ReactNode } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEthereum } from 'react-icons/fa';
-import { SiSolidity, SiWeb3Dotjs, SiTypescript, SiRust } from 'react-icons/si';
-import { TbBrandNextjs } from 'react-icons/tb';
-import { useMounted } from '@/hooks';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { SiPython, SiGo, SiDocker, SiTensorflow, SiPytorch, SiOpenai } from 'react-icons/si';
+import { useLanguage } from '@/lib/context/LanguageContext';
+import { ContactModal } from './ContactModal';
+import Link from 'next/link';
 
-interface CommandHistory {
-  command: string;
-  output: ReactNode;
-  timestamp: number;
-}
-
-// 文件系统模拟
-const fileSystem = {
-  'about.md':
-    "👋 Hi, I'm Dexter Ellis\n- 🔭 Web3 Technical Director\n- 💡 Blockchain Enthusiast\n- 🌱 DeFi Builder",
-  'skills.txt':
-    '- Smart Contract Development\n- DeFi Protocol Design\n- Blockchain Architecture\n- Full-stack Web3 Development',
-  'projects/': {
-    'defi-protocol.sol': 'A next-gen DeFi protocol',
-    'nft-marketplace.ts': 'NFT trading platform',
-    'dao-governance.rs': 'DAO governance system',
-  },
-  'contact.json':
-    '{\n  "email": "dexter@web3.dev",\n  "telegram": "@dexterdev",\n  "discord": "dexter#1234"\n}',
-  'README.md':
-    "# Welcome to Dexter's Terminal\n\nAvailable commands:\n- ls: List files and directories\n- cat: View file contents\n- pwd: Show current directory\n- help: Show available commands\n- clear: Clear terminal\n- cd: Change directory",
-};
-
-// 定义可用命令
-type CommandFunction = (...args: string[]) => ReactNode;
-
-interface AvailableCommands {
-  [key: string]: CommandFunction;
-}
-
-const createAvailableCommands = (currentDirectory: string): AvailableCommands => ({
-  help: () => (
-    <div className="space-y-1">
-      <span className="text-blue-400 font-bold">Available commands:</span>
-      <div className="text-gray-300">
-        - <span className="text-yellow-400">ls</span> [path]: List files and directories
-        - <span className="text-yellow-400">cat</span> &lt;file&gt;: View file contents
-        - <span className="text-yellow-400">pwd</span>: Show current directory
-        - <span className="text-yellow-400">clear</span>: Clear terminal
-        - <span className="text-yellow-400">cd</span> &lt;dir&gt;: Change directory
-        - <span className="text-yellow-400">whoami</span>: Display user info
-        - <span className="text-yellow-400">date</span>: Show current date
-        - <span className="text-yellow-400">echo</span> &lt;text&gt;: Display text
-      </div>
-    </div>
-  ),
-
-  ls: (path = '.') => {
-    if (path === '.') {
-      return (
-        <div className="flex flex-wrap gap-2">
-          {Object.keys(fileSystem).map((file) => (
-            <span key={file}>
-              {file.endsWith('/') ? (
-                <span className="text-blue-400">{file}</span>
-              ) : (
-                <span className="text-yellow-400">{file}</span>
-              )}
-            </span>
-          ))}
-        </div>
-      );
-    }
-    if (path === 'projects') {
-      return (
-        <div className="flex flex-wrap gap-2">
-          {Object.keys(fileSystem['projects/']).map((file) => (
-            <span key={file} className="text-yellow-400">
-              {file}
-            </span>
-          ))}
-        </div>
-      );
-    }
-    return <span className="text-red-400">ls: cannot access {path}: No such file or directory</span>;
-  },
-
-  cat: (file: string) => {
-    if (file === 'about.md') {
-      return (
-        <div className="space-y-2">
-          <span className="text-green-400 text-lg">👋 Hi, I&apos;m Dexter Ellis</span>
-          <div className="text-blue-400">
-            <div>🔭 Web3 Technical Director</div>
-            <div>💡 Blockchain Enthusiast</div>
-            <div>🌱 DeFi Builder</div>
-          </div>
-        </div>
-      );
-    }
-
-    if (file === 'skills.txt') {
-      return (
-        <div className="space-y-1">
-          {[
-            'Smart Contract Development',
-            'DeFi Protocol Design',
-            'Blockchain Architecture',
-            'Full-stack Web3 Development',
-          ].map((skill) => (
-            <div key={skill} className="text-yellow-400">
-              - {skill}
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    if (file === 'README.md') {
-      return (
-        <div className="space-y-2">
-          <div className="text-green-400 text-lg font-bold"># Welcome to Dexter&apos;s Terminal</div>
-          <div className="text-blue-400 font-bold">Available commands:</div>
-          <div className="text-gray-300 space-y-1">
-            - <span className="text-yellow-400">ls</span>: List files and directories
-            - <span className="text-yellow-400">cat</span>: View file contents
-            - <span className="text-yellow-400">pwd</span>: Show current directory
-            - <span className="text-yellow-400">help</span>: Show available commands
-            - <span className="text-yellow-400">clear</span>: Clear terminal
-            - <span className="text-yellow-400">cd</span>: Change directory
-          </div>
-        </div>
-      );
-    }
-
-    if (file === 'contact.json') {
-      return (
-        <div className="text-blue-400 whitespace-pre-wrap">
-          {`{
-  "email": "dexter@web3.dev",
-  "telegram": "@dexterdev",
-  "discord": "dexter#1234"
-}`}
-        </div>
-      );
-    }
-
-    if (file.startsWith('projects/')) {
-      const projectFile = file.slice(9);
-      if (projectFile in fileSystem['projects/']) {
-        const content = fileSystem['projects/'][projectFile as keyof typeof fileSystem['projects/']];
-        return <div className="text-green-400">{content}</div>;
-      }
-    }
-
-    return <span className="text-red-400">cat: {file}: No such file or directory</span>;
-  },
-
-  pwd: () => <span className="text-blue-400">/home/dexter{currentDirectory}</span>,
-
-  whoami: () => <span className="text-green-400">dexter - Web3 Technical Director</span>,
-
-  date: () => <span className="text-yellow-400">{new Date().toString()}</span>,
-
-  echo: (...args: string[]) => <span className="text-green-400">{args.join(' ')}</span>,
-
-  cd: (dir: string) => {
-    if (dir === 'projects' || dir === 'projects/') {
-      return '';
-    }
-    if (dir === '..' || dir === '../') {
-      return '';
-    }
-    return <span className="text-red-400">cd: {dir}: No such directory</span>;
-  },
-});
-
-export function Hero() {
-  const mounted = useMounted();
-  const [isTerminalFocused, setIsTerminalFocused] = useState(false);
-  const [currentInput, setCurrentInput] = useState('');
-  const [commandHistory, setCommandHistory] = useState<CommandHistory[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
-  const [currentDirectory, setCurrentDirectory] = useState('');
-
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const terminalContentRef = useRef<HTMLDivElement>(null);
-  const initializedRef = useRef(false);
-
-  const handleCommand = useCallback((cmd: string) => {
-    const trimmedCmd = cmd.trim();
-    if (!trimmedCmd) return;
-
-    const args = trimmedCmd.split(' ');
-    const command = args[0];
-    const commandArgs = args.slice(1);
-
-    let output: ReactNode = 'Command not found: ' + command;
-
-    if (command === 'clear') {
-      setCommandHistory([]);
-      return;
-    }
-
-    setCurrentDirectory((prevDir) => {
-      const commands = createAvailableCommands(prevDir);
-      if (command in commands) {
-        const commandFn = commands[command as keyof typeof commands];
-        output = commandFn(...commandArgs);
-      }
-
-      setCommandHistory((prev) => [
-        ...prev,
-        {
-          command: trimmedCmd,
-          output,
-          timestamp: Date.now(),
-        },
-      ]);
-
-      // Handle cd command
-      if (command === 'cd') {
-        if (commandArgs[0] === 'projects') {
-          return '/projects';
-        } else if (commandArgs[0] === '..' || commandArgs[0] === '../') {
-          return '';
-        }
-      }
-      return prevDir;
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    // 自动聚焦到输入框
-    inputRef.current?.focus();
-
-    // 防止重复初始化
-    if (!initializedRef.current) {
-      initializedRef.current = true;
-      // 显示初始的README内容和个人信息
-      handleCommand('cat README.md');
-      setTimeout(() => {
-        handleCommand('cat about.md');
-      }, 500);
-    }
-  }, [mounted, handleCommand]);
-
-  useEffect(() => {
-    if (terminalContentRef.current) {
-      terminalContentRef.current.scrollTop = terminalContentRef.current.scrollHeight;
-    }
-  }, [commandHistory]);
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleCommand(currentInput);
-      setCurrentInput('');
-      setHistoryIndex(-1);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (historyIndex < commandHistory.length - 1) {
-        const newIndex = historyIndex + 1;
-        setHistoryIndex(newIndex);
-        setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex].command);
-      }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (historyIndex > 0) {
-        const newIndex = historyIndex - 1;
-        setHistoryIndex(newIndex);
-        setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex].command);
-      } else if (historyIndex === 0) {
-        setHistoryIndex(-1);
-        setCurrentInput('');
-      }
-    }
-  };
-
-  const handleTerminalClick = () => {
-    setIsTerminalFocused(true);
-    inputRef.current?.focus();
-  };
-
-  // 在客户端挂载前显示加载状态
-  if (!mounted) {
-    return (
-      <section className="px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto w-full relative">
-          <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border border-gray-700 overflow-hidden shadow-2xl w-full">
-            <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 flex items-center">
-              <div className="flex space-x-2">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-              </div>
-              <div className="flex-1 text-center text-sm text-gray-400">~/dexter</div>
-            </div>
-            <div className="p-6 h-[400px] flex items-center justify-center">
-              <span className="text-gray-500 font-mono">Loading terminal...</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+/**
+ * CodeCard Component
+ * Simplified, clean version.
+ */
+const CodeCard = () => {
+  const { t } = useLanguage();
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8">
-      <motion.div
-        className="max-w-4xl mx-auto w-full relative"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div
-          className={`bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg border ${
-            isTerminalFocused ? 'border-blue-500/50' : 'border-gray-700'
-          } overflow-hidden shadow-2xl transition-colors duration-300 w-full`}
-          ref={terminalRef}
-          onClick={handleTerminalClick}
-        >
-          {/* Terminal Header */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 flex items-center">
-            <div className="flex space-x-2">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-            </div>
-            <div className="flex-1 text-center text-sm text-gray-400">~/dexter{currentDirectory}</div>
-          </div>
-
-          {/* Terminal Content */}
-          <div ref={terminalContentRef} className="p-6 space-y-2 h-[400px] overflow-y-auto">
-            <AnimatePresence mode="popLayout">
-              {commandHistory.map((item, index) => (
-                <motion.div
-                  key={`cmd-${item.timestamp}-${index}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="font-mono text-sm sm:text-base"
-                >
-                  <div className="flex items-center text-green-400">
-                    <span className="mr-2">$</span>
-                    <span>{item.command}</span>
-                  </div>
-                  <div className="text-gray-400 ml-4 whitespace-pre-wrap">{item.output}</div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {/* Current Input Line */}
-            <div className="flex items-center text-green-400 font-mono">
-              <span className="mr-2">$</span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={currentInput}
-                onChange={(e) => setCurrentInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent outline-none text-green-400 font-mono"
-                onBlur={() => setIsTerminalFocused(false)}
-                onFocus={() => setIsTerminalFocused(true)}
-              />
-            </div>
-          </div>
+    <div className="relative group w-full">
+      {/* Clean border, no glow */}
+      <div className="relative bg-black rounded-xl border border-white/10 p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed shadow-sm">
+        {/* Window Controls - Grayscale/Subtle */}
+        <div className="flex items-center space-x-2 mb-4 border-b border-white/10 pb-4">
+          <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
+          <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
+          <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
+          <div className="ml-auto text-xs text-neutral-500 font-sans">quant_agent.py</div>
         </div>
 
-        {/* Tech Stack */}
-        <motion.div
-          className="flex flex-wrap items-center justify-center gap-6 text-2xl text-gray-400 mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <FaEthereum title="Ethereum" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <SiSolidity title="Solidity" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <SiWeb3Dotjs title="Web3.js" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <TbBrandNextjs title="Next.js" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <SiTypescript title="TypeScript" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} className="cursor-pointer">
-            <SiRust title="Rust" />
-          </motion.div>
-        </motion.div>
+        {/* Code Content */}
+        <div className="text-gray-300 overflow-x-auto scrollbar-hide">
+          <div className="whitespace-pre">
+            <div><span className="text-purple-400">class</span> <span className="text-yellow-400">AlphaAgent</span><span className="text-gray-500">(</span><span className="text-green-400">Agent</span><span className="text-gray-500">):</span></div>
+            <div className="pl-4 py-1">
+              <span className="text-gray-600">{t('home.hero.code.comment1')}</span>
+            </div>
+            <div className="pl-4">
+              <span className="text-purple-400">def</span> <span className="text-blue-400">__init__</span><span className="text-gray-500">(</span><span className="text-cyan-400">self</span>, <span className="text-cyan-400">strategy</span><span className="text-gray-500">):</span>
+            </div>
+            <div className="pl-8">
+              <span className="text-cyan-400">self</span>.strategy = strategy
+              <br />
+              <span className="text-cyan-400">self</span>.risk_level = <span className="text-green-400">"HIGH_FREQUENCY"</span>
+            </div>
+            
+            <div className="pl-4 mt-3">
+              <span className="text-purple-400">async def</span> <span className="text-blue-400">execute_trade</span><span className="text-gray-500">(</span><span className="text-cyan-400">self</span>, <span className="text-cyan-400">market_data</span><span className="text-gray-500">):</span>
+            </div>
+            <div className="pl-8">
+              <span className="text-gray-600">{t('home.hero.code.comment2')}</span>
+              <br />
+              <span className="text-purple-400">if</span> <span className="text-cyan-400">self</span>.analyze(market_data) &gt; <span className="text-orange-400">0.85</span>:
+              <br />
+              <span className="text-purple-400">await</span> <span className="text-cyan-400">self</span>.order(<span className="text-green-400">"{t('home.hero.code.mission')}"</span>)
+            </div>
+            <div><span className="text-gray-500"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-        {/* Social Links */}
-        <motion.div
-          className="flex items-center justify-center space-x-4 mt-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-gray-400 hover:text-blue-400 transition-colors"
+export function Hero() {
+  const { t } = useLanguage();
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  return (
+    <section className="relative min-h-[calc(100vh-7rem)] flex items-center justify-center overflow-hidden py-8 sm:py-0 bg-black">
+      {/* Removed background blobs and noise for a clean look */}
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Introduction */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center lg:text-left space-y-6 sm:space-y-8"
           >
-            <FaGithub className="text-xl" />
-            <span className="text-sm font-mono">github/dexter</span>
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-gray-400 hover:text-blue-400 transition-colors"
+            {/* Badge - Simplified */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/50"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-neutral-300 text-xs sm:text-sm font-medium tracking-wide">{t('home.hero.badge')}</span>
+            </motion.div>
+            
+            {/* Main Title - Solid Color, No Gradient */}
+            <div className="space-y-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-tight">
+                {t('home.hero.title_prefix')} <br className="hidden lg:block" />
+                <span className="text-white">
+                  {t('home.hero.title_highlight')}
+                </span>
+              </h1>
+            </div>
+            
+            {/* Subtitle */}
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-light text-neutral-400 max-w-2xl mx-auto lg:mx-0">
+              {t('home.hero.subtitle_prefix')} <strong className="text-white font-semibold">{t('home.hero.subtitle_name')}</strong>, {t('home.hero.subtitle_role')} 
+              {t('home.hero.subtitle_desc')}
+            </h2>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+               <Link 
+                 href="/projects" 
+                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm uppercase tracking-wider hover:bg-neutral-200 transition-all duration-300 text-center"
+               >
+                 {t('home.hero.cta_projects')}
+               </Link>
+               <button 
+                 onClick={() => setIsContactOpen(true)}
+                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-transparent border border-neutral-700 text-white font-medium text-sm uppercase tracking-wider hover:bg-neutral-900 hover:border-neutral-500 transition-all duration-300"
+               >
+                 {t('home.hero.cta_contact')}
+               </button>
+            </div>
+
+            {/* Social Links & Tech Stack */}
+            <div className="pt-8 flex flex-col sm:flex-row items-center justify-between border-t border-neutral-800 gap-6">
+              <div className="flex space-x-4">
+                 <a href="https://github.com/Coder0xH" className="text-neutral-400 hover:text-white transition-colors transform hover:-translate-y-1"><FaGithub size={24} /></a>
+                 <a href="https://twitter.com" className="text-neutral-400 hover:text-white transition-colors transform hover:-translate-y-1"><FaTwitter size={24} /></a>
+                 <a href="https://linkedin.com" className="text-neutral-400 hover:text-white transition-colors transform hover:-translate-y-1"><FaLinkedin size={24} /></a>
+              </div>
+              <div className="flex items-center space-x-4 text-neutral-500">
+                <SiGo size={22} className="hover:text-white transition-colors" title="Go" />
+                <SiPython size={22} className="hover:text-white transition-colors" title="Python" />
+                <SiTensorflow size={22} className="hover:text-white transition-colors" title="TensorFlow" />
+                <SiPytorch size={22} className="hover:text-white transition-colors" title="PyTorch" />
+                <SiDocker size={24} className="hover:text-white transition-colors" title="Docker" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Visual Element */}
+          <motion.div 
+             initial={{ opacity: 0, scale: 0.95, x: 20 }}
+             animate={{ opacity: 1, scale: 1, x: 0 }}
+             transition={{ duration: 0.8, delay: 0.2 }}
+             className="relative w-full max-w-lg mx-auto lg:max-w-none mt-8 lg:mt-0"
           >
-            <FaLinkedin className="text-xl" />
-            <span className="text-sm font-mono">linkedin/dexter</span>
-          </a>
-        </motion.div>
-      </motion.div>
+             {/* Simplified backing - no colored glow */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-white/5 rounded-full blur-[80px] -z-10"></div>
+             
+             <CodeCard />
+
+             {/* Floating 3D-like Icons - Grayscale/Subtle */}
+             <motion.div 
+               animate={{ y: [-10, 10, -10] }}
+               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+               className="absolute -top-6 -right-6 z-20 hidden sm:flex"
+             >
+               <div className="w-16 h-16 bg-black rounded-xl border border-neutral-800 shadow-lg flex items-center justify-center">
+                 <SiOpenai size={32} className="text-neutral-300" />
+               </div>
+             </motion.div>
+
+             <motion.div 
+               animate={{ y: [10, -10, 10] }}
+               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+               className="absolute -bottom-6 -left-6 z-20 hidden sm:flex"
+             >
+               <div className="w-14 h-14 bg-black rounded-xl border border-neutral-800 shadow-lg flex items-center justify-center">
+                 <SiGo size={30} className="text-neutral-300" />
+               </div>
+             </motion.div>
+          </motion.div>
+          
+        </div>
+      </div>
+
+      {/* Contact Modal */}
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 }
