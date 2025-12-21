@@ -15,6 +15,7 @@ export function ProjectsPage() {
     ...projects.bitcoin,
   ];
 
+  const backendProjects = [...projects.backend];
   const fullStackProjects = [...projects.corporate];
 
   return (
@@ -37,6 +38,12 @@ export function ProjectsPage() {
             {'}'}
           </div>
         </motion.div>
+
+        <ProjectSection
+          title="Backend & Infrastructure"
+          projects={backendProjects}
+          icon={<FaCode className="w-6 h-6 text-green-400" />}
+        />
 
         <ProjectSection
           title="Blockchain Projects"

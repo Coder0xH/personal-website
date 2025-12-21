@@ -116,6 +116,26 @@
                 "响应式设计",
                 "现代动画效果"
             ]
+        },
+        "fastapi": {
+            "title": "FastAPI 脚手架",
+            "description": "集成了认证、WebSocket 和 Redis 的现代化 FastAPI 脚手架",
+            "highlights": [
+                "集成 JWT 和 TOTP 的用户认证",
+                "异步数据库与 Redis 集成",
+                "支持广播的 WebSocket",
+                "Docker 就绪的架构"
+            ]
+        },
+        "go": {
+            "title": "Go 微服务脚手架",
+            "description": "基于 DDD 和 gRPC 的 Go 微服务框架",
+            "highlights": [
+                "DDD 四层架构设计",
+                "gRPC 服务间通信",
+                "钱包登录与 JWT 认证",
+                "区块链事件监听"
+            ]
         }
     },
     "resume": {

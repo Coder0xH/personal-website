@@ -108,6 +108,11 @@ export function useProjectsData() {
             if (p.title.includes('Infa Labs')) return localizeProject(p, 'infalabs');
             return p;
         }),
+        backend: initialProjects.backend.map((p) => {
+            if (p.title.includes('FastAPI')) return localizeProject(p, 'fastapi');
+            if (p.title.includes('Go Microservice')) return localizeProject(p, 'go');
+            return p;
+        }),
     };
 
     return localizedProjects;

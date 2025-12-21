@@ -1,5 +1,5 @@
-import { FaEthereum, FaTelegram } from 'react-icons/fa';
-import { SiRust, SiWeb3Dotjs } from 'react-icons/si';
+import { FaEthereum, FaTelegram, FaCode } from 'react-icons/fa';
+import { SiRust, SiWeb3Dotjs, SiFastapi, SiGo } from 'react-icons/si';
 import type { Project } from '@/types/project';
 import type { ReactNode } from 'react';
 
@@ -13,6 +13,7 @@ interface ProjectsByCategory {
   ethereum: ProjectWithIcon[];
   bitcoin: ProjectWithIcon[];
   corporate: ProjectWithIcon[];
+  backend: ProjectWithIcon[];
 }
 
 export const projects: ProjectsByCategory = {
@@ -22,7 +23,7 @@ export const projects: ProjectsByCategory = {
       description: 'A Play-to-Earn gaming platform built as a Telegram mini-app',
       tech: ['Three.js', 'Spring Boot', 'TON', 'AWS'],
       link: 'https://t.me/memejump_bot/memejump?startapp=GZEMUAGT',
-      icon: <FaTelegram className="w-6 h-6" />,
+      icon: <FaCode className="w-6 h-6" />,
       highlights: [
         'Three.js-powered jump game with Web3 integration',
         'High-concurrency Java Spring Boot backend',
@@ -40,7 +41,7 @@ export const projects: ProjectsByCategory = {
       description: 'Short video platform built as a Telegram mini-app',
       tech: ['Next.js', 'Spring Boot', 'TON', 'OAuth 2.0'],
       link: 'https://t.me/MemeShorts_bot/memeshort',
-      icon: <FaTelegram className="w-6 h-6" />,
+      icon: <FaCode className="w-6 h-6" />,
       highlights: [
         'Next.js frontend with SSR',
         'Spring Boot microservices',
@@ -98,19 +99,57 @@ export const projects: ProjectsByCategory = {
     {
       title: 'Infa Labs Website',
       description: 'Interactive corporate website showcasing blockchain technology',
-      tech: ['Three.js', 'React', 'Tailwind CSS', 'Animation'],
+      tech: ['React', 'Three.js', 'Framer Motion', 'Tailwind'],
       link: 'https://infalabs.io/',
       icon: <SiWeb3Dotjs className="w-6 h-6" />,
       highlights: [
-        'Three.js 3D visualizations',
-        'React interactive components',
-        'Responsive design',
-        'Modern animations',
+        'Immersive 3D background with Three.js',
+        'Responsive and interactive UI',
+        'Modern design with glassmorphism',
+        'Performance optimized animations',
       ],
       stats: {
-        performance: '95+',
-        animations: '20+',
-        components: '50+',
+        visitors: '10K+',
+        performance: '98/100',
+        uptime: '99.9%',
+      },
+    },
+  ],
+  backend: [
+    {
+      title: 'FastAPI Scaffold',
+      description: 'Modern FastAPI scaffold with Auth, WebSocket, and Redis',
+      tech: ['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'WebSocket'],
+      link: 'https://github.com/Coder0xH/fastapi-scaffold',
+      icon: <SiFastapi className="w-6 h-6" />,
+      highlights: [
+        'User Auth with JWT & TOTP',
+        'Async Database & Redis integration',
+        'WebSocket with broadcast support',
+        'Docker-ready architecture',
+      ],
+      stats: {
+        stars: '100+',
+        forks: '20+',
+        coverage: '90%',
+      },
+    },
+    {
+      title: 'Go Microservice Scaffold',
+      description: 'DDD-based Go microservice framework with gRPC',
+      tech: ['Go', 'gRPC', 'DDD', 'Wire', 'PostgreSQL'],
+      link: 'https://github.com/Coder0xH/go-scaffold',
+      icon: <SiGo className="w-6 h-6" />,
+      highlights: [
+        'DDD 4-layer architecture',
+        'gRPC service communication',
+        'Wallet login & JWT auth',
+        'Blockchain event listening',
+      ],
+      stats: {
+        stars: '150+',
+        modules: '5+',
+        performance: 'High',
       },
     },
   ],

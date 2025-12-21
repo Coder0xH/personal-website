@@ -116,6 +116,26 @@
                 "Responsive design",
                 "Modern animations"
             ]
+        },
+        "fastapi": {
+            "title": "FastAPI Scaffold",
+            "description": "Modern FastAPI scaffold with Auth, WebSocket, and Redis",
+            "highlights": [
+                "User Auth with JWT & TOTP",
+                "Async Database & Redis integration",
+                "WebSocket with broadcast support",
+                "Docker-ready architecture"
+            ]
+        },
+        "go": {
+            "title": "Go Microservice Scaffold",
+            "description": "DDD-based Go microservice framework with gRPC",
+            "highlights": [
+                "DDD 4-layer architecture",
+                "gRPC service communication",
+                "Wallet login & JWT auth",
+                "Blockchain event listening"
+            ]
         }
     },
     "resume": {

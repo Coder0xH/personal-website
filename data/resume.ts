@@ -46,10 +46,10 @@ export const resumeDataEn: ResumeData = {
   profile: {
     name: "Li Fenghao (Dexter)",
     title: "Blockchain Development Engineer",
-    age: 28,
+    age: 29,
     email: "coder0xh@gmail.com",
-    phone: "17302691995",
-    location: "Shanxi, China",
+    phone: "173****1995",
+    location: "Shenzhen, China",
     attributes: [
       "Strong proactive thinking and problem-solving abilities",
       "Passionate about new technologies, especially blockchain"
@@ -99,7 +99,7 @@ export const resumeDataEn: ResumeData = {
   ],
   experience: [
     {
-      company: "Crypto Exchange",
+      company: "Zoomex Crypto Exchange",
       period: "2025.07 - Present",
       role: "Senior Go/Java Developer",
       description: [
@@ -203,10 +203,10 @@ export const resumeDataZh: ResumeData = {
   profile: {
     name: "李丰豪 (Dexter)",
     title: "区块链开发工程师",
-    age: 28,
+    age: 29,
     email: "coder0xh@gmail.com",
-    phone: "17302691995",
-    location: "中国 山西",
+    phone: "173****1995",
+    location: "中国 深圳",
     attributes: [
       "拥有很强的主动思考能力和解决问题的能力",
       "非常喜欢新技术，特别是区块链技术"
@@ -256,7 +256,7 @@ export const resumeDataZh: ResumeData = {
   ],
   experience: [
     {
-      company: "某交易所",
+      company: "Zoomex交易所",
       period: "2025.07 - 至今",
       role: "高级 Go/Java 开发工程师",
       description: [
